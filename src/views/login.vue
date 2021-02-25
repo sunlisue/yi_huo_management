@@ -31,7 +31,7 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-import { login } from '../api/userMG'
+import { login } from '@/api/userMG';
 import { setCookie, getCookie, delCookie, createCode } from '../utils/util'
 import md5 from 'js-md5'
 export default {
@@ -64,10 +64,6 @@ export default {
   },
   // 创建完毕状态(里面是操作)
   created() {
-    this.$message({
-      message: '账号密码及验证码不为空即可',
-      type: 'success'
-    })
     // 获取存在本地的用户名密码
     this.getuserpwd()
   },
@@ -76,41 +72,32 @@ export default {
         onSuccess(){
             console.log('验证通过');
             this.msg = 'login success';
-          // 测试通道，不为空直接登录
-          setTimeout(() => {
-            this.logining = false
-            this.$store.commit('login', 'true')
-            this.$router.push({ path: '/goods/Goods' })
-          }, 1000)
           // 注释
-          // login(this.ruleForm).then(res => {
-          //   if (res.success) {
-          //     if (this.rememberpwd) {
-          //       //保存帐号到cookie，有效期7天
-          //       setCookie('user', this.ruleForm.username, 7)
-          //       //保存密码到cookie，有效期7天
-          //       setCookie('pwd', this.ruleForm.password, 7)
-          //     } else {
-          //       delCookie('user')
-          //       delCookie('pwd')
-          //     }
-          //     //如果请求成功就让他2秒跳转路由
-          //     setTimeout(() => {
-          //       this.logining = false
-          //       // 缓存token
-          //       localStorage.setItem('logintoken', res.data.token)
-          //       // 缓存用户个人信息
-          //       localStorage.setItem('userdata', JSON.stringify(res.data))
-          //       this.$store.commit('login', 'true')
-          //       this.$router.push({ path: '/goods/Goods' })
-          //     }, 1000)
-          //   } else {
-          //     this.$message.error(res.msg)
-          //     this.logining = false
-          //     return false
-          //   }
-          // })
-        },
+          login({uPhone:this.ruleForm.username,uPwd:this.ruleForm.password}).then(res => {
+            if (res.code == 200) {
+              if (this.rememberpwd) {
+                //保存帐号到cookie，有效期7天
+                setCookie('user', this.ruleForm.username, 7)
+                //保存密码到cookie，有效期7天
+                setCookie('pwd', this.ruleForm.password, 7)
+              } else {
+                delCookie('user')
+                delCookie('pwd')
+              }
+                this.logining = false
+                // 缓存token
+                localStorage.setItem('logintoken', res.muser.uPwd)
+                // 缓存用户个人信息
+                localStorage.setItem('userdata', JSON.stringify(res.muser))
+                this.$store.commit('login', 'true');
+                this.$router.push({ path: '/userLikeShow'});
+            } else {
+              this.$message.error(res.msg)
+              this.logining = false
+              return false
+            }
+          })
+        },		
         onFail(){
             this.$message('验证不通过！')
             this.msg = ''

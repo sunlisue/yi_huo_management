@@ -123,19 +123,6 @@
 
 <script>
 // 导入请求方法
-import {
-  userList,
-  userSave,
-  userDelete,
-  userPwd,
-  userExpireToken,
-  userFlashCache,
-  userLock,
-  UserDeptTree,
-  UserDeptSave,
-  UserDeptdeptTree,
-  UserChangeDept
-} from '../../api/userMG'
 import Pagination from '../../components/Pagination'
 export default {
   data() {

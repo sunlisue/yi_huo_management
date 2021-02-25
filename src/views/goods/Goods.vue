@@ -113,17 +113,10 @@ export default {
   components: {
     Pagination
   },
-  /**
-   * 数据发生改变
-   */
-
-  /**
-   * 创建完毕
-   */
   created() {
-    this.getdata(this.formInline)
+    this.getdata(this.formInline);
+		
   },
-
   /**
    * 里面的方法只有被调用才会执行
    */
@@ -194,31 +187,6 @@ export default {
       this.pageparm.currentPage = this.formInline.page
       this.pageparm.pageSize = this.formInline.limit
       this.pageparm.total = res.count
-      // 模拟数据结束
-
-      /***
-       * 调用接口，注释上面模拟数据 取消下面注释
-       */
-      // deptList(parameter)
-      //   .then(res => {
-      //     this.loading = false
-      //     if (res.success == false) {
-      //       this.$message({
-      //         type: 'info',
-      //         message: res.msg
-      //       })
-      //     } else {
-      //       this.listData = res.data
-      //       // 分页赋值
-      //       this.pageparm.currentPage = this.formInline.page
-      //       this.pageparm.pageSize = this.formInline.limit
-      //       this.pageparm.total = res.count
-      //     }
-      //   })
-      //   .catch(err => {
-      //     this.loading = false
-      //     this.$message.error('菜单加载失败，请稍后再试！')
-      //   })
     },
     // 分页插件事件
     callFather(parm) {

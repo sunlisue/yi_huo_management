@@ -15,8 +15,8 @@
 </template>
 <script>
 // 导入组件
-import navcon from '../components/navcon.vue'
-import leftnav from '../components/leftnav.vue'
+import navcon from '../components/navcon.vue';
+import leftnav from '../components/leftnav.vue';
 export default {
   name: 'index',
   data() {
@@ -41,17 +41,10 @@ export default {
           this.showclass = 'aside'
         }, 300)
       }
-    })
+    });
   },
   beforeUpdate() {},
   // 挂载前状态(里面是操作)
-  beforeMount() {
-    // 弹出登录成功
-    this.$message({
-      message: '登录成功',
-      type: 'success'
-    })
-  }
 }
 </script>
 <style >

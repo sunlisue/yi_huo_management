@@ -1,0 +1,18 @@
+<template>
+	<div>
+		<!-- 面包屑导航 -->
+		<el-breadcrumb separator-class="el-icon-arrow-right">
+		  <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+		  <el-breadcrumb-item>宣传产品</el-breadcrumb-item>
+		</el-breadcrumb>
+		
+	</div>
+</template>
+
+<script>
+export default {
+	name:"advertiseProduct"
+}
+</script>
+<style lang="scss" scoped>
+</style>
