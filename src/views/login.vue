@@ -151,7 +151,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .login-wrap {
   box-sizing: border-box;
   width: 100%;
@@ -192,6 +192,6 @@ export default {
    align-items: center;
    justify-content: center;
    transform: translate(-50%,-50%);
-   background-color: rgb(0,0,0,0.3);
+   background-color: rgba(0,0,0,0.3);
 }
 </style>
