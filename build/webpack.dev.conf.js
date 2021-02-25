@@ -9,9 +9,34 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+const os = require('os')
 
 const HOST = process.env.HOST
-const PORT = process.env.PORT && Number(process.env.PORT)
+const PORT = process.env.PORT && Number(process.env.PORT);
+// 获取代理目标
+const TARGET = process.env.TARGET
+if(TARGET){
+　config.dev.proxyTable['/项目上下文'].target=TARGET
+}
+// 获取网卡IP
+var interfaces = os.networkInterfaces();
+var localIPAddress = "";
+var interfaces = os.networkInterfaces();
+for (var devName in interfaces) {
+    var iface = interfaces[devName];
+    for (var i = 0; i < iface.length; i++) {
+        var alias = iface[i];
+        if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+            localIPAddress = alias.address;
+            break;
+        }
+    }
+    if (localIPAddress) break;
+}
+localIPAddress = localIPAddress || "127.0.0.1";
+
+
+
 
 const devWebpackConfig = merge(baseWebpackConfig, {
     module: {
@@ -31,7 +56,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         hot: true,
         contentBase: false, // since we use CopyWebpackPlugin.
         compress: true,
-        host: HOST || config.dev.host,
+        host: HOST || localIPAddress,
         port: PORT || config.dev.port,
         open: config.dev.autoOpenBrowser,
         overlay: config.dev.errorOverlay ? { warnings: false, errors: true } : false,
@@ -79,7 +104,9 @@ module.exports = new Promise((resolve, reject) => {
             // Add FriendlyErrorsPlugin
             devWebpackConfig.plugins.push(new FriendlyErrorsPlugin({
                 compilationSuccessInfo: {
-                    messages: [`Your application is running here: http://${devWebpackConfig.devServer.host}:${port}`],
+                    messages: [
+						`serve: http://${devWebpackConfig.devServer.host}:${port}`
+					],
                 },
                 onErrors: config.dev.notifyOnErrors ?
                     utils.createNotifierCallback() : undefined
