@@ -85,6 +85,8 @@ const staffkeys = () => import("@/views/commodity/staffkeys");
 const MyClassify = () => import("@/views/brand/MyClassify");
 
 
+// 首页
+const home = () => import("@/views/home");
 
 
 
@@ -114,8 +116,16 @@ export default new Router({
 		name: '首页',
 		component: index,
 		iconCls: 'el-icon-tickets',
-		redirect: "/userJsp/userLikeShow.jsp",
+		redirect: "/home.jsp",
 		children: [{
+				path: '/home.jsp',
+				name: '首页',
+				component: home,
+				meta: {
+					requireAuth: true
+				}
+			},
+			{
 				path: '/userJsp/userLikeShow.jsp',
 				name: '用户展示',
 				component: userLikeShow,

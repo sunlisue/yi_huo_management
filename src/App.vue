@@ -33,5 +33,14 @@ body {
 	.el-range-separator{
 		line-height: 28px;
 	}
+	// 正常输入框宽度
+	.el-input-normal-width{
+		width: 200px;
+	}
+	// 正常 间距
+	.el-input-normal-margin-right{
+		margin-right: 10px;
+	}
+	
 }
 </style>

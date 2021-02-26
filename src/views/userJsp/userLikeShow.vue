@@ -7,8 +7,8 @@
 		</el-breadcrumb>
 		<!-- 头部 -->
 		<div class="userLikeShow-header">
-			<el-input v-model="form.uName" placeholder="用户昵称"></el-input>
-			<el-input v-model="form.uName" placeholder="手机号"></el-input>
+			<el-input v-model="form.uName" class="el-input-normal-width el-input-normal-margin-right" placeholder="用户昵称"></el-input>
+			<el-input v-model="form.uName" class="el-input-normal-width el-input-normal-margin-right" placeholder="手机号"></el-input>
 			    <el-date-picker
 			      v-model="dateDouble"
 			      type="daterange"
