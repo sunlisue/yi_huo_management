@@ -188,7 +188,7 @@ export default new Router({
 				}
 			},
 			{
-				path: '/commodity/orderFromNew.jsp',
+				path: '/order/orderFromNew.jsp',
 				name: '订单详情',
 				component: orderFromNew,
 				meta: {
@@ -196,7 +196,7 @@ export default new Router({
 				}
 			},
 			{
-				path: '/commodity/refund.jsp',
+				path: '/order/refund.jsp',
 				name: '退款申请',
 				component: refund,
 				meta: {
@@ -204,7 +204,7 @@ export default new Router({
 				}
 			},
 			{
-				path: '/commodity/DispatchBill.jsp',
+				path: '/order/DispatchBill.jsp',
 				name: '发货管理',
 				component: DispatchBill,
 				meta: {
@@ -212,7 +212,7 @@ export default new Router({
 				}
 			},
 			{
-				path: '/commodity/logisticsshow.jsp',
+				path: '/order/logisticsshow.jsp',
 				name: '物流查询',
 				component: logisticsshow,
 				meta: {
@@ -220,7 +220,7 @@ export default new Router({
 				}
 			},
 			{
-				path: '/commodity/withdraw.jsp',
+				path: '/order/withdraw.jsp',
 				name: '提现申请',
 				component: withdraw,
 				meta: {
@@ -228,7 +228,7 @@ export default new Router({
 				}
 			},
 			{
-				path: '/commodity/exchangeapply.jsp',
+				path: '/order/exchangeapply.jsp',
 				name: '换货申请',
 				component: exchangeapply,
 				meta: {
@@ -236,7 +236,7 @@ export default new Router({
 				}
 			},
 			{
-				path: '/commodity/companywithdraw.jsp',
+				path: '/order/companywithdraw.jsp',
 				name: '合伙人提现申请',
 				component: companywithdraw,
 				meta: {
@@ -244,7 +244,7 @@ export default new Router({
 				}
 			},
 			{
-				path: '/commodity/orderFromAll.jsp',
+				path: '/order/orderFromAll.jsp',
 				name: '订单总览',
 				component: orderFromAll,
 				meta: {
@@ -252,7 +252,7 @@ export default new Router({
 				}
 			},
 			{
-				path: '/commodity/excellog.jsp',
+				path: '/order/excellog.jsp',
 				name: '导出日志',
 				component: excellog,
 				meta: {
@@ -260,7 +260,7 @@ export default new Router({
 				}
 			},
 			{
-				path: '/commodity/home_slideshow.jsp',
+				path: '/settings/home_slideshow.jsp',
 				name: '轮播图管理',
 				component: home_slideshow,
 				meta: {
@@ -268,7 +268,7 @@ export default new Router({
 				}
 			},
 			{
-				path: '/commodity/logisticsshowAll.jsp',
+				path: '/settings/logisticsshowAll.jsp',
 				name: '物流管理',
 				component: logisticsshowAll,
 				meta: {
@@ -276,7 +276,7 @@ export default new Router({
 				}
 			},
 			{
-				path: '/commodity/BasicsSetting.jsp',
+				path: '/settings/BasicsSetting.jsp',
 				name: '基础设置',
 				component: BasicsSetting,
 				meta: {
@@ -284,7 +284,7 @@ export default new Router({
 				}
 			},
 			{
-				path: '/commodity/ManagerUserLikeShow.jsp',
+				path: '/userJsp/ManagerUserLikeShow.jsp',
 				name: '后台用户',
 				component: ManagerUserLikeShow,
 				meta: {
@@ -300,7 +300,7 @@ export default new Router({
 				}
 			},
 			{
-				path: '/commodity/MyClassify.jsp',
+				path: '/brand/MyClassify.jsp',
 				name: '品牌分类管理',
 				component: MyClassify,
 				meta: {

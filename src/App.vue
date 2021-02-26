@@ -10,7 +10,7 @@ export default {
 };
 </script>
 
-<style> 
+<style lang="scss"> 
 html,
 body {
     width: 100%;
@@ -26,5 +26,12 @@ body {
     color: #2c3e50;
     widows: 100%;
     height: 100%;
+	.el-input__inner{
+		height: 35px;
+		line-height: 35px;
+	}
+	.el-range-separator{
+		line-height: 28px;
+	}
 }
 </style>
