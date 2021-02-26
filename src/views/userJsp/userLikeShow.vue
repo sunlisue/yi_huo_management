@@ -1,57 +1,147 @@
 <template>
-	<div class="userLikeShow">
+	<div class="userLikeShow" v-loading="loading">
 		<!-- 面包屑导航 -->
 		<el-breadcrumb separator-class="el-icon-arrow-right">
-		  <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-		  <el-breadcrumb-item>{{$route.name}}</el-breadcrumb-item>
+			<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+			<el-breadcrumb-item>{{$route.name}}</el-breadcrumb-item>
 		</el-breadcrumb>
 		<!-- 头部 -->
-		<div class="userLikeShow-header">
+		<div class="userLikeShow-header el-header-normal-margin-top">
 			<el-input v-model="form.uName" class="el-input-normal-width el-input-normal-margin-right" placeholder="用户昵称"></el-input>
-			<el-input v-model="form.uName" class="el-input-normal-width el-input-normal-margin-right" placeholder="手机号"></el-input>
-			    <el-date-picker
-			      v-model="dateDouble"
-			      type="daterange"
-				  value-format="yyyy-MM-dd"
-			      range-separator="至"
-			      start-placeholder="开始日期"
-			      end-placeholder="结束日期">
-			    </el-date-picker>
+			<el-input v-model="form.uPhone" class="el-input-normal-width el-input-normal-margin-right" placeholder="手机号"></el-input>
+			<label class="el-input-normal-margin-right">
+				注册日期:
+				<el-date-picker v-model="dateDouble" type="daterange" value-format="yyyy-MM-dd" range-separator="至"
+				 start-placeholder="开始日期" end-placeholder="结束日期">
+				</el-date-picker>
+			</label>
+			<el-select v-model="form.uShopkeeper" placeholder="请选择" class="el-input-normal-margin-right el-input-normal-select-width">
+				<el-option :value="1" label="店主"></el-option>
+				<el-option :value="2" label="普通用户"></el-option>
+			</el-select>
+			<el-button type="primary" size="small" @click="getList">快速查询</el-button>
+			<el-button type="primary" size="small" @click="reset">重置</el-button>
+		</div>
+		<!-- 身体 -->
+		<div class="userLikeShow-body el-body-normal-margin-top">
+			<el-table :data="tableData" stripe style="width: 100%" tooltip-effect="dark" ref="multipleTable">
+				<el-table-column type="selection" width="50">
+				</el-table-column>
+				<el-table-column type="index" label="序号" width="80">
+				</el-table-column>
+				<el-table-column label="用户头像" width="180">
+					<template slot-scope="scope">
+						<el-image style="width: 100px; height: 100px;border-radius: 50%;" :src="scope.row.uPic" fit="cover"></el-image>
+					</template>
+				</el-table-column>
+				<el-table-column prop="uName" label="用户昵称">
+				</el-table-column>
+				<el-table-column prop="address" label="手机号">
+				</el-table-column>
+				<el-table-column prop="uTime" label="注册时间" width="180">
+				</el-table-column>
+				<el-table-column label="性别">
+					<template slot-scope="scope">
+						<span>{{scope.row.uSex==1?"男":"女"}}</span>
+					</template>
+				</el-table-column>
+				<el-table-column prop="uAge" label="年龄">
+				</el-table-column>
+				<el-table-column label="角色">
+					<template slot-scope="scope">
+						<span>{{scope.row.uShopkeeper==1?"店主":"普通用户"}}</span>
+					</template>
+				</el-table-column>
+				<el-table-column prop="uStaus" label="状态">
+					<template slot-scope="scope">
+						<span :style="scope.row.uStaus==0?'color:green':'color:red'">{{scope.row.uStaus==0?"可用":"禁用"}}</span>
+					</template>
+				</el-table-column>
+				<el-table-column width="300" label="操作">
+					<template slot-scope="scope">
+						<el-button type="danger" @click="tableBtn(scope.row,1)" size="small">点击冻结</el-button>
+						<el-button type="primary" @click="tableBtn(scope.row,2)" size="small">设置为分销身份</el-button>
+					</template>
+				</el-table-column>
+			</el-table>
 		</div>
 	</div>
 </template>
 
 <script>
-import {selUserAll} from "@/api/userMG.js"
-export default {
-	name:"userLikeShow",
-	data(){
-		return{
-			dateDouble:"",
-			form:{
-				uName:"",
-				uPhone:"",
-				uTime:"",
-				fTime:"",
-				uShopkeeper:"" //用户角色 0 全部 1 店主 2.普通用户
+	import {
+		selUserAll
+	} from "@/api/userMG.js"
+	export default {
+		name: "userLikeShow",
+		data() {
+			return {
+				dateDouble: "",
+				tableData: [],
+				loading: false,
+				form: {
+					uName: "",
+					uPhone: "",
+					uTime: "",
+					fTime: "",
+					uShopkeeper: ""
+				}
+			}
+		},
+		watch: {
+			dateDouble(res) {
+				this.form.uTime = res[0];
+				this.form.fTime = res[0];
+			}
+		},
+		created() {
+			this.getList();
+		},
+		methods: {
+			// 表格里的点击事件
+			tableBtn(data, status) {
+				let context;
+				console.log(data, status);
+				if (status == 1) context = "警告！是否要冻结该用户！";
+				else context = "是否要添加该用户的分销员身份！";
+				
+				this.$confirm(context, "提示", {
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				}).then(() => {
+					if (status == 1) {
+						this.$message.success("已冻结！")
+					} else {
+						this.$message.success("已添加！")
+					}
+				})
+			},
+			// 获取列表
+			getList() {
+				this.loading = true;
+				selUserAll(this.form).then(res => {
+					this.tableData=res;
+					this.loading = false;
+				})
+			},
+			// 重置
+			reset() {
+				for (let i in this.form) {
+					this.form[i] = "";
+				};
+				this.getList();
 			}
 		}
-	},
-	watch:{
-		dateDouble(res){
-			this.form.uTime = res[0];
-			this.form.fTime = res[0];
-		}
-	},
-	created() {
-		selUserAll()
 	}
-}
 </script>
 <style lang="scss" scoped>
-.userLikeShow{
-	.userLikeShow-header{
-		display: flex;
+	.userLikeShow {
+		.userLikeShow-body {}
+
+		.userLikeShow-header {
+			display: flex;
+			flex-wrap: wrap;
+		}
 	}
-}
 </style>
