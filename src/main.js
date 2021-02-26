@@ -29,6 +29,10 @@ Vue.use(ElementUI);
 // 过滤器
 import * as custom from './utils/util'
 
+//注册过滤器
+import filters from './api/filter';
+Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
+
 Object.keys(custom).forEach(key => {
     Vue.filter(key, custom[key])
 })

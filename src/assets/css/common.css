@@ -1,0 +1,50 @@
+.statusFail {
+  color: #f56c6c;
+}
+
+.statusSuccess {
+  color: #67c23a;
+}
+
+.statusOn {
+  color: #909399;
+}
+
+.statusWarning {
+  color: #e6a23c;
+}
+
+.statusPrimary {
+  color: #409eff;
+}
+
+.text-link {
+  color: #409eff;
+  cursor: pointer;
+}
+
+.table-btns {
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.back-header {
+  margin-bottom: 20px;
+}
+
+.menu-icon img {
+  margin-top: -5px;
+  width: 20px;
+  height: 20px;
+}
+
+.table-img {
+  width: 30px;
+  height: 30px;
+}
+
+.lunbo-table-img {
+  width: 200px;
+}
