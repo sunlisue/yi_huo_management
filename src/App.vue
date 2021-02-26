@@ -30,6 +30,12 @@ body {
 		height: 35px;
 		line-height: 35px;
 	}
+	.el-input__icon{
+		line-height: 30px;
+	}
+	.el-date-editor .el-range__icon {
+		line-height: 28px;
+	}
 	.el-range-separator{
 		line-height: 28px;
 	}
@@ -37,9 +43,19 @@ body {
 	.el-input-normal-width{
 		width: 200px;
 	}
+	// 选择宽度
+	.el-input-normal-select-width{
+		width: 150px;
+	}
 	// 正常 间距
 	.el-input-normal-margin-right{
 		margin-right: 10px;
+	}
+	.el-header-normal-margin-top{
+		margin-top: 20px;
+	}
+	.el-body-normal-margin-top{
+		margin-top: 10px;
 	}
 	
 }
