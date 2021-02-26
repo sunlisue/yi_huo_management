@@ -53,7 +53,7 @@
 						<span>{{scope.row.pGrade}}分</span>
 					</template>
 				</el-table-column>
-				<el-table-column prop="uAge" label="产品库存">
+				<el-table-column prop="pCount" label="产品库存">
 				</el-table-column>
 				<el-table-column label="产品创建时间">
 					<template slot-scope="scope">
