@@ -14,18 +14,18 @@
 				 start-placeholder="开始日期" end-placeholder="结束日期">
 				</el-date-picker>
 			</label>
-			<el-select v-model="form.uShopkeeper" placeholder="请选择" class="el-input-normal-margin-right el-input-normal-select-width">
+			<el-select v-model="form.pType" placeholder="请选择分类" class="el-input-normal-margin-right el-input-normal-select-width">
 				<el-option v-for="(item,index) in selcategoryArray" :key="index" :value="item.cId" :label="item.cType"></el-option>
 			</el-select>
-			<el-select v-model="form.uShopkeeper" placeholder="请选择" class="el-input-normal-margin-right el-input-normal-select-width">
-				<el-option v-for="(item,index) in selcategoryArray" :key="index" :value="item.cId" :label="item.cType"></el-option>
+			<el-select v-model="form.pBrandid" placeholder="请选择品牌" class="el-input-normal-margin-right el-input-normal-select-width">
+				<el-option v-for="(item,index) in selectBrandArray" :key="index" :value="item.bId" :label="item.bName"></el-option>
 			</el-select>
 			<el-button type="primary" size="small" @click="getList">快速查询</el-button>
 			<el-button type="primary" size="small" @click="reset">重置</el-button>
 		</div>
 		<!-- 身体 -->
 		<div class="product-body el-body-normal-margin-top">
-			<el-table :data="tableData" stripe style="width: 100%" tooltip-effect="dark" ref="multipleTable">
+			<el-table :data="tableData" size="mini" stripe style="width: 100%" border tooltip-effect="dark" :header-cell-style="{ background: '#eef1f6', color: '#606266' }" ref="multipleTable">
 				<el-table-column type="selection" width="50">
 				</el-table-column>
 				<el-table-column type="index" label="序号" width="50">
@@ -37,13 +37,13 @@
 						<el-image style="width: 100px; height: 100px;" :src="scope.row.pCover" fit="cover"></el-image>
 					</template>
 				</el-table-column>
-				<el-table-column  label="产品价格" width="120">
+				<el-table-column  label="产品价格" width="100">
 					<template slot-scope="scope">
 						<div>原价：{{scope.row.pPrice}}</div>
 						<div>现价：{{scope.row.pPricef}}</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="分销比例" width="130">
+				<el-table-column label="分销比例" width="120">
 					<template slot-scope="scope">
 						<span>分销比例：{{scope.row.distributorRatio}}%</span>
 					</template>
@@ -53,52 +53,39 @@
 						<span>{{scope.row.pGrade}}分</span>
 					</template>
 				</el-table-column>
-				<el-table-column prop="uAge" label="产品库存">
+				<el-table-column prop="pCount" label="产品库存">
 				</el-table-column>
-				<el-table-column label="产品创建时间">
-					<template slot-scope="scope">
-						<span>{{scope.row.uShopkeeper==1?"店主":"普通用户"}}</span>
-					</template>
-				</el-table-column>
-				<el-table-column prop="uStaus" label="产品类型">
-					<template slot-scope="scope">
-						<span :style="scope.row.uStaus==0?'color:green':'color:red'">{{scope.row.uStaus==0?"可用":"禁用"}}</span>
-					</template>
-				</el-table-column>
-				<el-table-column prop="uStaus" label="折扣">
-					<template slot-scope="scope">
-						<span :style="scope.row.uStaus==0?'color:green':'color:red'">{{scope.row.uStaus==0?"可用":"禁用"}}</span>
-					</template>
-				</el-table-column>
-				<el-table-column prop="uStaus" label="会员级别">
-					<template slot-scope="scope">
-						<span :style="scope.row.uStaus==0?'color:green':'color:red'">{{scope.row.uStaus==0?"可用":"禁用"}}</span>
-					</template>
-				</el-table-column>
+				<el-table-column label="产品创建时间" prop="pTime" width="150"></el-table-column>
+				<el-table-column prop="cType" label="产品类型"></el-table-column>
+				<el-table-column prop="pDiscount" label="折扣"></el-table-column>
+				<el-table-column prop="sTitle" label="会员级别"></el-table-column>
 				<el-table-column prop="uStaus" label="运费">
 					<template slot-scope="scope">
-						<span :style="scope.row.uStaus==0?'color:green':'color:red'">{{scope.row.uStaus==0?"可用":"禁用"}}</span>
+						<span>{{scope.row.pFreight==0?"免费":scope.row.pFreight}}</span>
 					</template>
 				</el-table-column>
 				<el-table-column prop="uStaus" label="推荐状态">
 					<template slot-scope="scope">
-						<span :style="scope.row.uStaus==0?'color:green':'color:red'">{{scope.row.uStaus==0?"可用":"禁用"}}</span>
+						<span :style="scope.row.pRecommendtype==1?'color:green':'color:red'">{{scope.row.pRecommendtype==1?"已推荐":"未推荐"}}</span>
 					</template>
 				</el-table-column>
-				<el-table-column prop="uStaus" label="上下架状态">
+				<el-table-column prop="uStaus" label="上下架状态" width="100">
 					<template slot-scope="scope">
-						<span :style="scope.row.uStaus==0?'color:green':'color:red'">{{scope.row.uStaus==0?"可用":"禁用"}}</span>
+						<span :style="scope.row.pPutawaytype==1?'color:green':'color:red'">{{scope.row.pPutawaytype==1?"上架中":"未上架"}}</span>
 					</template>
 				</el-table-column>
-				<el-table-column prop="uStaus" label="宣传">
+				<el-table-column prop="uStaus" label="宣传" width="100">
 					<template slot-scope="scope">
-						<span :style="scope.row.uStaus==0?'color:green':'color:red'">{{scope.row.uStaus==0?"可用":"禁用"}}</span>
+						<span :style="scope.row.pAdvertise==1?'color:green':'color:red'">{{scope.row.pAdvertise==1?"已推荐宣传":"未推荐宣传"}}</span>
 					</template>
 				</el-table-column>
-				<el-table-column width="300" label="操作">
+				<el-table-column width="420" label="操作" fixed="right">
 					<template slot-scope="scope">
-						<el-button type="danger" @click="tableBtn(scope.row,1)" size="small">点击冻结</el-button>
-						<el-button type="primary" @click="tableBtn(scope.row,2)" size="small">设置为分销身份</el-button>
+						<el-button type="success" @click="tableBtn(scope.row,1)" size="small">上架</el-button>
+						<el-button type="danger" @click="tableBtn(scope.row,1)" size="small">会员级别</el-button>
+						<el-button type="warning" @click="tableBtn(scope.row,2)" size="small">推荐宣传</el-button>
+						<el-button type="primary" @click="tableBtn(scope.row,1)" size="small">查看</el-button>
+						<el-button type="danger" @click="tableBtn(scope.row,2)" size="small">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -108,8 +95,9 @@
 
 <script>
 	import {
-		selcommoditise,selcategory
-	} from "@/api/userMG.js"
+		selcommoditise, selcategory,
+	} from "@/api/userMG.js";
+	import { getAllBrand } from "@/api/basisMG.js";
 	export default {
 		name: "product",
 		data() {
@@ -118,25 +106,30 @@
 				tableData: [],
 				loading: false,
 				form: {
-					pName: "",
-					uTime: "",
-					fTime: "",
-					uShopkeeper: ""
+					pName: "", //名称
+					startTime: "", //开始日期
+					stopTime: "", // 结束日期
+					pType: "", //分类
+					pBrandid: "", //品牌
 				},
-				selcategoryArray:[]
+				selcategoryArray:[],
+				selectBrandArray:[],
 			}
 		},
 		watch: {
-			dateDouble(res) {
-				this.form.uTime = res[0];
-				this.form.fTime = res[0];
+			dateDouble(res){
+				this.form.startTime = res[0];
+				this.form.stopTime = res[1];
 			}
 		},
 		created() {
 			this.getList();
 			selcategory().then(res=>{
-				this.selcategoryArray=res.datalist
-			})
+				this.selcategoryArray = res.datalist;
+			});
+			this.getAllBrand().then(data => {
+        this.selectBrandArray = data.allBrand;
+      });
 		},
 		methods: {
 			// 表格里的点击事件
@@ -172,7 +165,15 @@
 					this.form[i] = "";
 				};
 				this.getList();
-			}
+			},
+			async getAllBrand(){
+				let res = await getAllBrand({});
+				if (res.code === 200) {
+					return res;
+				} else {
+					this.$message.error(res.msg);
+				}
+			},
 		}
 	}
 </script>
