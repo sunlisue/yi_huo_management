@@ -32,11 +32,10 @@ export default {
   },
   // 创建完毕状态(里面是操作)
   created() {
-		// 获取侧边数据
-		leftNavList({uRank:JSON.parse(localStorage.getItem("userdata")).uRank}).then(res=>{
-			console.log('左侧导航栏',res)
-			this.allmenu = res;
-		});
+	// 获取侧边数据
+	leftNavList({uRank:JSON.parse(localStorage.getItem("userdata")).uRank}).then(res=>{
+		this.allmenu = res;
+	});
     // 监听
     this.$root.Bus.$on('toggle', value => {
       this.collapsed = !value
@@ -73,4 +72,9 @@ export default {
 .logoimg {
   height: 40px;
 }
+.el-aside{
+	overflow: overlay !important;
+}
+
+
 </style>

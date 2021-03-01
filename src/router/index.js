@@ -90,6 +90,8 @@ const home = () => import("@/views/home");
 
 
 
+
+const error = ()=> import("@/components/error")
 // 启用路由
 Vue.use(Router);
 
@@ -103,6 +105,11 @@ export default new Router({
 		meta: {
 			requireAuth: false
 		}
+	}, 
+	{
+		path: '*',
+		name:"404",
+		component: error ,
 	}, {
 		path: '/login',
 		name: '登录',

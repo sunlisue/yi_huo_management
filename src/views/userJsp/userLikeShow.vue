@@ -19,7 +19,7 @@
 				<el-option :value="1" label="店主"></el-option>
 				<el-option :value="2" label="普通用户"></el-option>
 			</el-select>
-			<el-button type="primary" size="small" @click="getList">快速查询</el-button>
+			<el-button type="primary" size="small" @click="getList('query')">快速查询</el-button>
 			<el-button type="primary" size="small" @click="reset">重置</el-button>
 		</div>
 		<!-- 身体 -->
@@ -65,15 +65,21 @@
 				</el-table-column>
 			</el-table>
 		</div>
+		<!-- 底部 -->
+		<div class="userLikeShow-footer" v-if="form.current">
+			<Pagination @callFather="getList" :childMsg="{currentPage:form.current,pageSize:form.size}" />
+		</div>
 	</div>
 </template>
 
 <script>
 	import {
 		selUserAll
-	} from "@/api/userMG.js"
+	} from "@/api/userMG.js";
+	import Pagination from "@/components/Pagination.vue";
 	export default {
 		name: "userLikeShow",
+		components:{Pagination},
 		data() {
 			return {
 				dateDouble: "",
@@ -84,7 +90,9 @@
 					uPhone: "",
 					uTime: "",
 					fTime: "",
-					uShopkeeper: ""
+					uShopkeeper: "",
+					current:1,
+					size:5
 				}
 			}
 		},
@@ -118,10 +126,17 @@
 				})
 			},
 			// 获取列表
-			getList() {
+			getList(options) {
+				if(options == "query"){  //快速查找
+					this.form.current = 0;
+					this.form.size = 0;
+				}else if(options){
+					this.form.current = options.currentPage;
+					this.form.size = options.pageSize;
+				}
 				this.loading = true;
 				selUserAll(this.form).then(res => {
-					this.tableData=res;
+					this.tableData=res.user;
 					this.loading = false;
 				})
 			},
@@ -130,6 +145,8 @@
 				for (let i in this.form) {
 					this.form[i] = "";
 				};
+				this.form.current=1;
+				this.form.size=5;
 				this.getList();
 			}
 		}

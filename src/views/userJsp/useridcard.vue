@@ -38,6 +38,12 @@
 				</el-table-column>
 			</el-table>
 		</div>
+		<!-- 底部 -->
+		<div class="useridcard-footer" v-if="form.current">
+			<Pagination @callFather="getList" :childMsg="{currentPage:form.current,pageSize:form.size}" />
+		</div>
+		
+		<!-- 相册查看器 -->
 		<el-image-viewer v-if="showViewer" :on-close="closeViewer" :url-list="[url]" />
 	</div>
 </template>
@@ -47,10 +53,11 @@
 		selUseridcardAll
 	} from "@/api/userMG.js";
 	import ElImageViewer from 'element-ui/packages/image/src/image-viewer';
+	import Pagination from "@/components/Pagination.vue";
 	export default {
 		name: "useridcard",
 		components: {
-			ElImageViewer
+			ElImageViewer,Pagination
 		},
 		data() {
 			return {
@@ -58,6 +65,10 @@
 				loading: false,
 				showViewer:false,
 				url:"",
+				form:{
+					current:1,
+					size:5
+				},
 			}
 		},
 		created() {
@@ -91,10 +102,14 @@
 				this.showViewer = true
 			},
 			// 获取列表
-			getList() {
+			getList(options) {
+				if(options){
+					this.form.current = options.currentPage;
+					this.form.size = options.pageSize;
+				}
 				this.loading = true;
-				selUseridcardAll().then(res => {
-					this.tableData = res;
+				selUseridcardAll(this.form).then(res => {
+					this.tableData = res.useridcards;
 					this.loading = false;
 				})
 			},

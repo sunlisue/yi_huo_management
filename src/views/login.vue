@@ -90,7 +90,7 @@ export default {
                 // 缓存用户个人信息
                 localStorage.setItem('userdata', JSON.stringify(res.muser))
                 this.$store.commit('login', 'true');
-                this.$router.push({ path: '/userLikeShow'});
+                this.$router.push({ path: '/'});
             } else {
               this.$message.error(res.msg)
               this.logining = false
