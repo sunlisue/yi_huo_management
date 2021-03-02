@@ -96,7 +96,10 @@ export default {
               this.logining = false
               return false
             }
-          })
+          }).catch(res=>{
+				this.$message.error("服务器错误！");
+				this.logining = false;
+			})
         },		
         onFail(){
             this.$message('验证不通过！')

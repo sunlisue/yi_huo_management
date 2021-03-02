@@ -20,7 +20,7 @@
 			</div>
 			<!-- 身体 -->
 			<div class="series-body el-body-normal-margin-top">
-				<el-table :data="tableData" size="mini" stripe style="width: 100%" border tooltip-effect="dark" :header-cell-style="{ background: '#eef1f6', color: '#606266' }" ref="multipleTable">
+				<el-table :max-height="490" :data="tableData" size="mini" stripe style="width: 100%" border tooltip-effect="dark" :header-cell-style="{ background: '#eef1f6', color: '#606266' }" ref="multipleTable">
 					<el-table-column type="selection" width="50"></el-table-column>
 					<el-table-column type="index" label="序号" width="150"></el-table-column>
 					<el-table-column prop="seriesName" label="系列名称" width="500"></el-table-column>

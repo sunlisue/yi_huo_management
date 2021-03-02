@@ -10,7 +10,7 @@
 			<el-button type="primary" size="small" @click="dialogVisible = true">添加品牌</el-button>
 
 
-			<el-table class="el-header-normal-margin-top" size="mini" id="table" :data="tableData" v-loading="isTableLoading"
+			<el-table :max-height="700" class="el-header-normal-margin-top" size="mini" id="table" :data="tableData" v-loading="isTableLoading"
 			 border :header-cell-style="{ background: '#eef1f6', color: '#606266' }" :style="{ width: `${windowWidth - 260}px` }">
 				<el-table-column type="selection" width="40" fixed></el-table-column>
 				<el-table-column type="index" label="顺序" width="50px" fixed></el-table-column>

@@ -15,9 +15,11 @@ import './assets/icon/iconfont.css'
 import SlideVerify from 'vue-monoplasty-slide-verify';
 Vue.use(SlideVerify);
 
+import "../static/css/fwb.min.css";
+
 // 引入echarts
-import echarts from 'echarts'
-Vue.prototype.$echarts = echarts
+import echarts from 'echarts';
+Vue.prototype.$echarts = echarts;
 
 import axios from 'axios';
 Vue.prototype.$axios = axios;

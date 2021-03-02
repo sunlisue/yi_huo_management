@@ -21,3 +21,5 @@ export const selcategoryBypid = (params) => { return req("post", "/api/commodity
 export const getAllseries = (params) => { return req("post", "/api/commodity/getAllseries", params) }; 
 // 子分类查询
 export const ManagerselcategoryBycid = (params) => { return req("post", "/api/commodityapi/ManagerselcategoryBycid", params) }; 
+// 产品列表 - 查看详情
+export const productDetails = (params) => { return req("post", "/api/commodity/productDetails", params) }; 

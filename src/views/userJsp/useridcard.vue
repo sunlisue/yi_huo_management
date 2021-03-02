@@ -8,7 +8,7 @@
 
 		<!-- 身体 -->
 		<div class="useridcard-body el-body-normal-margin-top">
-			<el-table :data="tableData" stripe style="width: 100%" tooltip-effect="dark" ref="multipleTable">
+			<el-table :max-height="720" :data="tableData" stripe style="width: 100%" tooltip-effect="dark" ref="multipleTable">
 				<el-table-column type="selection" width="50">
 				</el-table-column>
 				<el-table-column type="index" label="序号" width="80">
