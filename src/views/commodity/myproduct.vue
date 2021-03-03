@@ -19,10 +19,11 @@
 			</el-select>
 			<el-button type="primary" size="small" @click="getList('query')">快速查询</el-button>
 			<el-button type="primary" size="small" @click="reset">重置</el-button>
+			<el-button type="primary" size="small" @click="$router.push({path:'/commodity/product_ch.jsp',query:{show:false}})">添加</el-button>
 		</div>
 		<!-- 身体 -->
 		<div class="myproduct-body el-body-normal-margin-top">
-			<el-table :max-height="490" :data="tableData" size="mini" stripe style="width: 100%" border tooltip-effect="dark" :header-cell-style="{ background: '#eef1f6', color: '#606266' }" ref="multipleTable">
+			<el-table :max-height="590" :data="tableData" size="mini" stripe style="width: 100%" border tooltip-effect="dark" :header-cell-style="{ background: '#eef1f6', color: '#606266' }" ref="multipleTable">
 				<el-table-column type="selection" width="50">
 				</el-table-column>
 				<el-table-column type="index" label="序号" width="50">
@@ -54,6 +55,16 @@
 				</el-table-column>
 				<el-table-column label="产品创建时间" prop="pTime" width="150"></el-table-column>
 				<el-table-column prop="cType" label="产品类型"></el-table-column>
+				
+				<el-table-column label="是否是镇店之宝" width="120">
+					<template slot-scope="scope">
+						  <el-select @change="selectBaby(scope.row.pIsTreasure,scope.row.pid)" v-model="scope.row.pIsTreasure" placeholder="请选择">
+						    <el-option label="是" :value="1" />
+							<el-option label="否" :value="0" />
+						  </el-select>
+					</template>
+				</el-table-column>
+				
 				<el-table-column prop="pDiscount" label="折扣"></el-table-column>
 				<el-table-column prop="sTitle" label="会员级别"></el-table-column>
 				<el-table-column prop="uStaus" label="运费">
@@ -81,7 +92,7 @@
 						<el-button type="success" @click="tableBtn(scope.row,1)" size="small">上架</el-button>
 						<el-button type="danger" @click="tableBtn(scope.row,1)" size="small">会员级别</el-button>
 						<el-button type="warning" @click="tableBtn(scope.row,2)" size="small">推荐宣传</el-button>
-						<el-button type="primary" @click="tableBtn(scope.row,1)" size="small">查看</el-button>
+						<el-button type="primary" @click="$router.push({query:{pid:scope.row.pid,show:false},path:'/commodity/product_ch.jsp'})" size="small">查看</el-button>
 						<el-button type="danger" @click="tableBtn(scope.row,2)" size="small">删除</el-button>
 					</template>
 				</el-table-column>
@@ -96,7 +107,7 @@
 
 <script>
 	import {
-		selcommoditise, selcategory,
+		selcommoditise, selcategory,upMerchantTreasureProduct
 	} from "@/api/userMG.js";
 	import { getAllBrand } from "@/api/basisMG.js";
 	import Pagination from "@/components/Pagination.vue"
@@ -135,6 +146,11 @@
 			});
 		},
 		methods: {
+			selectBaby(pIsTreasure,pid){
+				upMerchantTreasureProduct({pIsTreasure,pid}).then(res=>{
+					this.$message.success("设置成功")
+				})
+			},
 			// 表格里的点击事件
 			tableBtn(data, status) {
 				let context;

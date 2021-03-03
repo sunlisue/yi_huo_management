@@ -84,5 +84,17 @@ body {
 	  height: 178px;
 	  display: block;
 	}	
+	// 富文本禁止输入
+	.editor-ban{
+		position: relative;
+		&:before{
+			position: absolute;
+			content: "";
+			top: 0;left: 0;right: 0;bottom: 0;
+			z-index: 999;
+			background-color: rgba(245,247,250,0.6);
+			cursor: not-allowed;
+		}
+	}
 }
 </style>

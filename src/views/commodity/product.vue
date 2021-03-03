@@ -84,7 +84,7 @@
 						<el-button type="success" @click="tableBtn(scope.row,1)" size="small">上架</el-button>
 						<el-button type="danger" @click="tableBtn(scope.row,1)" size="small">会员级别</el-button>
 						<el-button type="warning" @click="tableBtn(scope.row,2)" size="small">推荐宣传</el-button>
-						<el-button type="primary" @click="$router.push({query:{pid:scope.row.pid},path:'/commodity/product_ch.jsp'})" size="small">查看</el-button>
+						<el-button type="primary" @click="$router.push({query:{pid:scope.row.pid,show:true},path:'/commodity/product_ch.jsp'})" size="small">查看</el-button>
 						<el-button type="danger" @click="tableBtn(scope.row,2)" size="small">删除</el-button>
 					</template>
 				</el-table-column>

@@ -5,7 +5,7 @@
 			<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
 			<el-breadcrumb-item>{{$route.name}}</el-breadcrumb-item>
 		</el-breadcrumb>
-		<div v-if="!cId">
+		<div v-if="!classifyChData">
 			<!-- 头部 -->
 			<div class="classify-header el-header-normal-margin-top">
 				<el-input v-model="form.pName" class="el-input-normal-width el-input-normal-margin-right" placeholder="类型名称"></el-input>
@@ -17,7 +17,7 @@
 				</label>
 				<el-button type="primary" size="small" @click="getList('query')">快速查询</el-button>
 				<el-button type="primary" size="small" @click="reset">重置</el-button>
-				<el-button type="primary" size="small" @click="add">添加类型</el-button>
+				<el-button type="primary" size="small" @click="add(1)">添加类型</el-button>
 			</div>
 			<!-- 身体 -->
 			<div class="classify-body el-body-normal-margin-top">
@@ -28,11 +28,12 @@
 					<el-table-column prop="cTime" label="产品类型创建时间"></el-table-column>
 					<el-table-column width="550" label="操作" fixed="right">
 						<template slot-scope="scope">
-							<el-button type="danger" @click="tableBtn(scope.row,1)" size="small">修改类型</el-button>
-							<el-button type="danger" @click="tableBtn(scope.row,1)" size="small">已隐藏</el-button>
+							<el-button type="danger" @click="add(scope.row)" size="small">修改类型</el-button>
+							<el-button type="success" @click="tableBtn(scope.row,1)" v-if="scope.row.cState == 1" size="small">显示</el-button>
+							<el-button type="danger" v-else @click="tableBtn(scope.row,1)" size="small">隐藏</el-button>
 							<el-button type="danger" @click="tableBtn(scope.row,2)" size="small">推荐宣传</el-button>
-							<el-button type="danger" @click="tableBtn(scope.row,1)" size="small">删除</el-button>
-							<el-button type="warning" @click="cId = scope.row.cId" size="small">查看子分类</el-button>
+							<el-button type="danger" @click="tableBtn(scope.row,3)" size="small">删除</el-button>
+							<el-button type="warning" @click="classifyChData = scope.row" size="small">查看子分类</el-button>
 						</template>
 					</el-table-column>
 				</el-table>
@@ -47,10 +48,9 @@
 		</div>
 	</div>
 </template>
-
 <script>
 	import {
-		selAllcategory
+		selAllcategory,addcategory,upcategory,delc,hidec
 	} from "@/api/userMG.js";
 	import Pagination from "@/components/Pagination.vue";
 	import classifyCh from "@/components/classify/classifyCh.vue";
@@ -62,7 +62,7 @@
 				dateDouble: "",
 				tableData: [],
 				loading: false,
-				cId:null,
+				classifyChData:null,
 				form: {
 					pName: "", //名称
 					startTime: "", //开始日期
@@ -88,8 +88,9 @@
 			tableBtn(data, status) {
 				let context;
 				console.log(data, status);
-				if (status == 1) context = "警告！是否要冻结该用户！";
-				else context = "是否要添加该用户的分销员身份！";
+				
+				if (status == 1) context = data.cState==1?"警告！是否要隐藏！":"警告！是否要显示！";
+				else if(status == 3)context = "是否要删除此类型!";
 				
 				this.$confirm(context, "提示", {
 					confirmButtonText: '确定',
@@ -97,9 +98,19 @@
 					type: 'warning'
 				}).then(() => {
 					if (status == 1) {
-						this.$message.success("已冻结！")
-					} else {
-						this.$message.success("已添加！")
+						hidec({cId:data.cId,cState:data.cState==1?2:1}).then(res=>{
+							this.$message.success(data.cState==1?'已显示':'已隐藏');
+							this.getList();
+						})
+					} else if(status == 3){
+						delc({cId:data.cId}).then(res=>{
+							if(res.code == 302){
+								this.$message.error(res.msg);
+							}else{
+								this.$message.success("删除成功");
+								this.getList();								
+							}
+						})
 					}
 				})
 			},
@@ -118,15 +129,22 @@
 					this.loading = false;
 				})
 			},
-			add(){
-				this.$prompt('请输入添加的类型', '提示', {
+			add(options){
+				this.$prompt(options?'请输入添加的类型':'请输入内容', '提示', {
 				  confirmButtonText: '确定',
 				  cancelButtonText: '取消',
 				}).then(({ value }) => {
-				  this.$message({
-					type: 'success',
-					message: '输入了' + value
-				  });
+					if(options!=1){
+						upcategory({cId:options.cId,cType:value}).then(res=>{
+							this.$message.success("修改成功");
+							this.getList();
+						})
+					}else{
+						addcategory({cType:value}).then(res=>{
+						  this.$message.success('添加成功');		
+						  this.getList();
+						})
+					}
 				})
 			},
 			// 重置

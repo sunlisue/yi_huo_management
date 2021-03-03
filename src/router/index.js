@@ -166,7 +166,7 @@ export default new Router({
 			},
 			{
 				path: '/commodity/product_ch.jsp',
-				name: '产品列表',
+				name: '产品',
 				component: product_ch,
 				meta: {
 					requireAuth: true

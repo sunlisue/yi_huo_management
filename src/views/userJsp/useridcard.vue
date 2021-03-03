@@ -31,7 +31,7 @@
 				</el-table-column>
 
 				<el-table-column width="300" label="操作">
-					<template slot-scope="scope">
+					<template slot-scope="scope" v-if="scope.row.state == 3">
 						<el-button type="danger" @click="tableBtn(scope.row,1)" size="small">通过</el-button>
 						<el-button type="danger" @click="tableBtn(scope.row,2)" size="small">不通过</el-button>
 					</template>
@@ -50,7 +50,7 @@
 
 <script>
 	import {
-		selUseridcardAll
+		selUseridcardAll,updUseruserIdcardById
 	} from "@/api/userMG.js";
 	import ElImageViewer from 'element-ui/packages/image/src/image-viewer';
 	import Pagination from "@/components/Pagination.vue";
@@ -79,16 +79,21 @@
 				let context;
 				if (status == 1) context = "警告！是否要升级该用户为店主！";
 				else context = "警告！是否要为该用户办理升级店主未通过！";
-				
 				this.$confirm(context, "提示", {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(() => {
 					if (status == 1) {
-						this.$message.success("通过！")
+						updUseruserIdcardById({iId:data.iId,staus:1,uid:data.uid}).then(res=>{
+							this.getList();
+							this.$message.success("通过");
+						})
 					} else {
-						this.$message.success("不通过！")
+						updUseruserIdcardById({iId:data.iId,staus:2,uid:data.uid}).then(res=>{
+							this.getList();
+							this.$message.success("不通过");
+						})
 					}
 				})
 			},
