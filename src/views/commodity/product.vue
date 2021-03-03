@@ -25,7 +25,7 @@
 		</div>
 		<!-- 身体 -->
 		<div class="product-body el-body-normal-margin-top">
-			<el-table :data="tableData" size="mini" stripe style="width: 100%" border tooltip-effect="dark" :header-cell-style="{ background: '#eef1f6', color: '#606266' }" ref="multipleTable">
+			<el-table :max-height="600" :data="tableData" size="mini" stripe style="width: 100%" border tooltip-effect="dark" :header-cell-style="{ background: '#eef1f6', color: '#606266' }" ref="multipleTable">
 				<el-table-column type="selection" width="50">
 				</el-table-column>
 				<el-table-column type="index" label="序号" width="50">
@@ -84,7 +84,7 @@
 						<el-button type="success" @click="tableBtn(scope.row,1)" size="small">上架</el-button>
 						<el-button type="danger" @click="tableBtn(scope.row,1)" size="small">会员级别</el-button>
 						<el-button type="warning" @click="tableBtn(scope.row,2)" size="small">推荐宣传</el-button>
-						<el-button type="primary" @click="tableBtn(scope.row,1)" size="small">查看</el-button>
+						<el-button type="primary" @click="$router.push({query:{pid:scope.row.pid,show:true},path:'/commodity/product_ch.jsp'})" size="small">查看</el-button>
 						<el-button type="danger" @click="tableBtn(scope.row,2)" size="small">删除</el-button>
 					</template>
 				</el-table-column>
@@ -120,7 +120,7 @@
 					pBrandid: "", //品牌
 					size:5,
 					current:1,
-					isme
+					// isme
 				},
 				selcategoryArray:[],
 				selectBrandArray:[],

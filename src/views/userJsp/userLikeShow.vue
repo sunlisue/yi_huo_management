@@ -24,7 +24,7 @@
 		</div>
 		<!-- 身体 -->
 		<div class="userLikeShow-body el-body-normal-margin-top">
-			<el-table :data="tableData" stripe style="width: 100%" tooltip-effect="dark" ref="multipleTable">
+			<el-table :max-height="700" :data="tableData" stripe style="width: 100%" tooltip-effect="dark" ref="multipleTable">
 				<el-table-column type="selection" width="50">
 				</el-table-column>
 				<el-table-column type="index" label="序号" width="80">
@@ -54,13 +54,15 @@
 				</el-table-column>
 				<el-table-column prop="uStaus" label="状态">
 					<template slot-scope="scope">
-						<span :style="scope.row.uStaus==0?'color:green':'color:red'">{{scope.row.uStaus==0?"可用":"禁用"}}</span>
+						<span :style="scope.row.uStaus==0?'color:green':'color:red'">{{scope.row.uStaus==0?"可用":"解冻"}}</span>
 					</template>
 				</el-table-column>
 				<el-table-column width="300" label="操作">
 					<template slot-scope="scope">
-						<el-button type="danger" @click="tableBtn(scope.row,1)" size="small">点击冻结</el-button>
-						<el-button type="primary" @click="tableBtn(scope.row,2)" size="small">设置为分销身份</el-button>
+						<el-button v-if="scope.row.uStaus == 0" type="danger" @click="tableBtn(scope.row,1)" size="small">点击冻结</el-button>
+						<el-button v-else type="success" @click="tableBtn(scope.row,1)" size="small">点击解冻</el-button>
+						<el-button type="primary" v-if="scope.row.uShopkeeper == 2" @click="tableBtn(scope.row,2)" size="small">设置为分销身份</el-button>
+						<el-button type="primary" v-else @click="tableBtn(scope.row,2)" size="small">取消分销身份</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -74,7 +76,7 @@
 
 <script>
 	import {
-		selUserAll
+		selUserAll,updUserById,updShopkeeperById
 	} from "@/api/userMG.js";
 	import Pagination from "@/components/Pagination.vue";
 	export default {
@@ -108,10 +110,10 @@
 		methods: {
 			// 表格里的点击事件
 			tableBtn(data, status) {
+				console.log(data)
 				let context;
-				console.log(data, status);
-				if (status == 1) context = "警告！是否要冻结该用户！";
-				else context = "是否要添加该用户的分销员身份！";
+				if (status == 1) context = data.uStaus==0?'警告！是否要冻结该用户！':'警告！是否要解冻该用户！';
+				else context = data.uShopkeeper==1?"是否要添加该用户的分销员身份！":"是否要取消该用户的分销员身份！";
 				
 				this.$confirm(context, "提示", {
 					confirmButtonText: '确定',
@@ -119,9 +121,16 @@
 					type: 'warning'
 				}).then(() => {
 					if (status == 1) {
-						this.$message.success("已冻结！")
+						updUserById({id:data.id,uStaus:data.uStaus==0?1:0}).then(res=>{
+							this.$message.success(data.uStaus==0?'已冻结':'已解冻');
+							this.getList();
+						})
 					} else {
-						this.$message.success("已添加！")
+						updShopkeeperById({id:data.id,uShopkeeper:data.uShopkeeper==1?2:1}).then(res=>{
+							this.$message.success(data.uShopkeeper==1?'已取消':'已添加');
+							this.getList();
+						})
+						
 					}
 				})
 			},

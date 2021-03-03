@@ -34,6 +34,9 @@ const advertiseProduct = () => import("@/views/commodity/advertiseProduct");
 const getAllBrand = () => import("@/views/commodity/getAllBrand");
 // 系列管理
 const series = () => import("@/views/commodity/series");
+// 产品详情
+const product_ch = () => import("@/views/commodity/productCh/productCh")
+
 
 // 订单管理 //
 
@@ -55,6 +58,9 @@ const companywithdraw = () => import("@/views/order/companywithdraw");
 const orderFromAll = () => import("@/views/order/orderFromAll");
 // 导出日志
 const excellog = () => import("@/views/order/excellog");
+// 运费模板
+const getFreighttemplate = () => import("@/views/freight/getFreighttemplate");
+
 
 
 // 系统设置 //
@@ -87,6 +93,8 @@ const MyClassify = () => import("@/views/brand/MyClassify");
 
 // 首页
 const home = () => import("@/views/home");
+
+
 
 
 
@@ -141,9 +149,25 @@ export default new Router({
 				}
 			},
 			{
+				path: '/freight/getFreighttemplate.jsp',
+				name: '运费模板',
+				component: getFreighttemplate,
+				meta: {
+					requireAuth: true
+				}
+			},
+			{
 				path: '/userJsp/useridcard.jsp',
 				name: '店主审核',
 				component: useridcard,
+				meta: {
+					requireAuth: true
+				}
+			},
+			{
+				path: '/commodity/product_ch.jsp',
+				name: '产品',
+				component: product_ch,
 				meta: {
 					requireAuth: true
 				}

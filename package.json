@@ -5,7 +5,7 @@
   "author": "lidonghui",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV='development' webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "build": "node build/build.js"
   },
@@ -15,8 +15,10 @@
     "http-proxy-middleware": "^0.18.0",
     "js-md5": "^0.7.3",
     "vue": "^2.5.2",
+    "vue-html5-editor": "^1.1.1",
     "vue-monoplasty-slide-verify": "^1.1.2",
     "vue-router": "^3.0.1",
+    "vuedraggable": "^2.24.3",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

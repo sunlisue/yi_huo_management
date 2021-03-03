@@ -58,5 +58,43 @@ body {
 	.el-body-normal-margin-top{
 		margin-top: 10px;
 	}
+	
+	
+	// 上传图片
+	.avatar-uploader .el-upload {
+	  border: 1px dashed #d9d9d9;
+	  border-radius: 6px;
+	  cursor: pointer;
+	  position: relative;
+	  overflow: hidden;
+	}
+	.avatar-uploader .el-upload:hover {
+	  border-color: #409EFF;
+	}
+	.avatar-uploader-icon {
+	  font-size: 28px;
+	  color: #8c939d;
+	  width: 178px;
+	  height: 178px;
+	  line-height: 178px;
+	  text-align: center;
+	}
+	.avatar {
+	  width: 178px;
+	  height: 178px;
+	  display: block;
+	}	
+	// 富文本禁止输入
+	.editor-ban{
+		position: relative;
+		&:before{
+			position: absolute;
+			content: "";
+			top: 0;left: 0;right: 0;bottom: 0;
+			z-index: 999;
+			background-color: rgba(245,247,250,0.6);
+			cursor: not-allowed;
+		}
+	}
 }
 </style>
