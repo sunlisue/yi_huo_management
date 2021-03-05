@@ -30,3 +30,5 @@ export const OrderList = (params) => { return req("post", "/api/Order/list", par
 export const OrderDelete = (params) => { return axios.delete("/api/Order/delete?ids=" + params + "&token=" + localStorage.getItem('logintoken')).then(res => res.data) };
 // 交易订单-交易订单退款
 export const OrderRefund = (params) => { return req("post", "/api/Order/refund", params) };
+// 订单总览
+export const selOrderAllPlatform = (params) => { return req("post", "/api/orderapi/selOrderAllPlatform", params) };
