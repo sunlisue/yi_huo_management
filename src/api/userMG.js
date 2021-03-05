@@ -39,3 +39,21 @@ export const delc = (params) => { return req("post", "/api/commodity/delc", para
 export const hidec = (params) => { return req("post", "/api/commodity/hidec", params) }; 
 // 设置或取消镇店之宝
 export const upMerchantTreasureProduct = (params) => { return req("post", "/api/merchantbrandapi/upMerchantTreasureProduct", params) }; 
+// 复制
+export const copyproduct = (params) => { return req("post", "/api/commodity/copyproduct", params) }; 
+// 商品评论
+export const getcomment = (params) => { return req("post", "/api/commodity/getcomment", params) }; 
+// 添加回复
+export const addcommentson = (params) => { return req("post", "/api/userclientapi/addcommentson", params) }; 
+// 删除评论
+export const delcomment = (params) => { return req("post", "/api/commodity/delcomment", params) }; 
+// 查看回复
+export const getcommentson = (params) => { return req("post", "/api/commodity/getcommentson", params) }; 
+// 删除回复
+export const delcommentson = (params) => { return req("post", "/api/commodity/delcommentson", params) }; 
+// 订单详情
+export const selOrderfromAlls = (params) => { return req("post", "/api/orderapi/selOrderfromAlls", params) }; 
+// 订单详情
+export const getrefund = (params) => { return req("post", "/api/orderapi/getrefund", params) }; 
+// 订单详情
+export const enterrefund = (params) => { return req("post", "/api/wxPay/enterrefund", params) }; 

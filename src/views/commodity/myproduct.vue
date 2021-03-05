@@ -89,11 +89,11 @@
 				</el-table-column>
 				<el-table-column width="420" label="操作" fixed="right">
 					<template slot-scope="scope">
-						<el-button type="success" @click="tableBtn(scope.row,1)" size="small">上架</el-button>
-						<el-button type="danger" @click="tableBtn(scope.row,1)" size="small">会员级别</el-button>
-						<el-button type="warning" @click="tableBtn(scope.row,2)" size="small">推荐宣传</el-button>
-						<el-button type="primary" @click="$router.push({query:{pid:scope.row.pid,show:false},path:'/commodity/product_ch.jsp'})" size="small">查看</el-button>
+						<el-button type="warning" @click="tableBtn(scope.row,3)" size="small">VR和视频</el-button>
+						<el-button type="success" @click="tableBtn(scope.row,1)" size="small">复制</el-button>
 						<el-button type="danger" @click="tableBtn(scope.row,2)" size="small">删除</el-button>
+						<el-button type="primary" @click="$router.push({query:{pid:scope.row.pid,show:false},path:'/commodity/product_ch.jsp'})" size="small">查看</el-button>
+						<el-button type="info" @click="$router.push({query:{id:scope.row.pid},path:'/myproductCh/comment'})" size="small">评论</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -107,7 +107,7 @@
 
 <script>
 	import {
-		selcommoditise, selcategory,upMerchantTreasureProduct
+		selcommoditise, selcategory,upMerchantTreasureProduct,copyproduct
 	} from "@/api/userMG.js";
 	import { getAllBrand } from "@/api/basisMG.js";
 	import Pagination from "@/components/Pagination.vue"
@@ -153,6 +153,7 @@
 			},
 			// 表格里的点击事件
 			tableBtn(data, status) {
+			 if(status != 1){
 				let context;
 				console.log(data, status);
 				if (status == 1) context = "警告！是否要冻结该用户！";
@@ -168,7 +169,13 @@
 					} else {
 						this.$message.success("已添加！")
 					}
+				})				 
+			 }else{
+				copyproduct({pid:data.pid}).then(res=>{
+					console.log(res);
+					this.$message.success("复制成功") 
 				})
+			 }
 			},
 			// 获取列表
 			getList(options) {

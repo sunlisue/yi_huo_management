@@ -60,7 +60,10 @@ const orderFromAll = () => import("@/views/order/orderFromAll");
 const excellog = () => import("@/views/order/excellog");
 // 运费模板
 const getFreighttemplate = () => import("@/views/freight/getFreighttemplate");
-
+// 评论
+const comment = () => import("@/views/commodity/myproductCh/comment")
+// 回复
+const commentCh = () => import("@/views/commodity/myproductCh/commentCh")
 
 
 // 系统设置 //
@@ -136,6 +139,22 @@ export default new Router({
 				path: '/home.jsp',
 				name: '首页',
 				component: home,
+				meta: {
+					requireAuth: true
+				}
+			},
+			{
+				path: '/myproductCh/commentCh',
+				name: '我的产品',
+				component: commentCh,
+				meta: {
+					requireAuth: true
+				}
+			},
+			{
+				path: '/myproductCh/comment',
+				name: '我的产品',
+				component: comment,
 				meta: {
 					requireAuth: true
 				}
