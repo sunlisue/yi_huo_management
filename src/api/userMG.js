@@ -57,3 +57,34 @@ export const selOrderfromAlls = (params) => { return req("post", "/api/orderapi/
 export const getrefund = (params) => { return req("post", "/api/orderapi/getrefund", params) }; 
 // 订单详情
 export const enterrefund = (params) => { return req("post", "/api/wxPay/enterrefund", params) }; 
+// 上下架
+export const isputaway = (params) => { return req("post", "/api/commodity/isputaway", params) }; 
+// 产品列表 - 推荐
+export const isrecommend = (params) => { return req("post", "/api/commodity/isrecommend", params) }; 
+// 产品列表 - 删除商品
+export const delproduce = (params) => { return req("post", "/api/commodity/delproduce", params) }; 
+// 产品列表 - 批量上架或下架商品
+export const batchIsPutAway = (params) => { return req("post", "/api/commodity/batchIsPutAway", params) }; 
+// 产品列表 - 推荐宣传
+export const updProductDetails = (params) => { return req("post", "/api/commodity/updProductDetails", params) }; 
+// 产品列表 - 轮播图管理
+export const selHomeSlideshow = (params) => { return req("post", "/api/ManagerUserController/selHomeSlideshow", params) }; 
+// 隐藏显示轮播图
+export const isdisplayedhl = (params) => { return req("post", "/api/commodity/isdisplayedhl", params) }; 
+// 删除轮播
+export const Delhl = (params) => { return req("post", "/api/commodity/Delhl", params) }; 
+// 添加轮播图
+export const addhl = (params) => { return req("post", "/api/commodity/addhl", params) }; 
+// 修改轮播图
+export const updatehl = (params) => { return req("post", "/api/commodity/updatehl", params) }; 
+// 品牌列表
+export const MgetAllBrand = (params) => { return req("post", "/api/commodity/MgetAllBrand", params) }; 
+// 显示或隐藏
+export const updBrand = (params) => { return req("post", "/api/commodity/updBrand", params) }; 
+// 品牌列表 - 删除
+export const delBrand = (params) => { return req("post", "/api/commodity/delBrand", params) }; 
+// 品牌列表 - 添加品牌
+export const AddBrand = (params) => { return req("post", "/api/commodity/AddBrand", params) }; 
+// 获取茶品
+export const selcommodity = (params) => { return req("post", "/api/commodityapi/selcommodity", params) }; 
+

@@ -96,5 +96,15 @@ body {
 			cursor: not-allowed;
 		}
 	}
+	
+	.home_slideshow {
+		.el-form--label-top .el-form-item__label{
+			padding: 0;
+		}
+		.el-form-item{
+			padding: 0;
+			margin-bottom: 10px;
+		}
+	}
 }
 </style>

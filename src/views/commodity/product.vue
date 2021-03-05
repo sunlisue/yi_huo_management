@@ -22,10 +22,12 @@
 			</el-select>
 			<el-button type="primary" size="small" @click="getList('query')">快速查询</el-button>
 			<el-button type="primary" size="small" @click="reset">重置</el-button>
+			<el-button type="success" size="small" v-if="upDownAll.length" @click="upDownAllAjax(1)">上架</el-button>
+			<el-button type="danger" size="small" v-if="upDownAll.length" @click="upDownAllAjax(2)">下架</el-button>
 		</div>
 		<!-- 身体 -->
 		<div class="product-body el-body-normal-margin-top">
-			<el-table :max-height="600" :data="tableData" size="mini" stripe style="width: 100%" border tooltip-effect="dark" :header-cell-style="{ background: '#eef1f6', color: '#606266' }" ref="multipleTable">
+			<el-table @select="selectTble" @select-all="selectAll" :max-height="600" :data="tableData" size="mini" stripe style="width: 100%" border tooltip-effect="dark" :header-cell-style="{ background: '#eef1f6', color: '#606266' }" ref="multipleTable">
 				<el-table-column type="selection" width="50">
 				</el-table-column>
 				<el-table-column type="index" label="序号" width="50">
@@ -81,11 +83,11 @@
 				</el-table-column>
 				<el-table-column width="420" label="操作" fixed="right">
 					<template slot-scope="scope">
-						<el-button type="success" @click="tableBtn(scope.row,1)" size="small">上架</el-button>
-						<el-button type="danger" @click="tableBtn(scope.row,1)" size="small">会员级别</el-button>
-						<el-button type="warning" @click="tableBtn(scope.row,2)" size="small">推荐宣传</el-button>
+						<el-button :type="scope.row.pPutawaytype==1?'danger':'success'" @click="tableBtn(scope.row,1)" size="small">{{scope.row.pPutawaytype==1?'下架':'上架'}}</el-button>
+						<el-button :type="scope.row.pAdvertise==1?'danger':'success'" @click="tableBtn(scope.row,2)" size="small">{{scope.row.pAdvertise==1?"不推荐宣传":"推荐宣传"}}</el-button>
+						<el-button :type="scope.row.pRecommendtype==1?'danger':'warning'" @click="tableBtn(scope.row,3)" size="small">{{scope.row.pRecommendtype==1?'不推荐':'推荐'}}</el-button>
 						<el-button type="primary" @click="$router.push({query:{pid:scope.row.pid,show:true},path:'/commodity/product_ch.jsp'})" size="small">查看</el-button>
-						<el-button type="danger" @click="tableBtn(scope.row,2)" size="small">删除</el-button>
+						<el-button type="danger" @click="tableBtn(scope.row,4)" size="small">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -99,7 +101,7 @@
 
 <script>
 	import {
-		selcommoditise, selcategory,
+		selcommoditise, selcategory,isputaway,isrecommend,delproduce,batchIsPutAway,updProductDetails
 	} from "@/api/userMG.js";
 	import { getAllBrand } from "@/api/basisMG.js";
 	import Pagination from "@/components/Pagination.vue"
@@ -122,6 +124,7 @@
 					current:1,
 					// isme
 				},
+				upDownAll:[],
 				selcategoryArray:[],
 				selectBrandArray:[],
 			}
@@ -138,26 +141,60 @@
 				this.selcategoryArray = res.datalist;
 			});
 			this.getAllBrand().then(data => {
-        this.selectBrandArray = data.allBrand;
+			this.selectBrandArray = data.allBrand;
       });
 		},
 		methods: {
+			upDownAllAjax(pPutawaytype){
+				let pIds="";
+				this.upDownAll.map((res,index)=>{
+					if(this.upDownAll.length == (index+1))pIds = pIds+res.pid;
+					else pIds = pIds+res.pid+';';	
+				})
+				batchIsPutAway({pIds,pPutawaytype}).then(res=>{			
+					this.$message.success("设置成功");
+					this.$refs.multipleTable.clearSelection();
+					this.upDownAll=[];
+					this.getList();
+				})
+			},
+			selectTble(options,row){
+				this.upDownAll = options;
+			},
+			selectAll(options){
+				this.upDownAll = options;
+			},
 			// 表格里的点击事件
 			tableBtn(data, status) {
 				let context;
-				console.log(data, status);
-				if (status == 1) context = "警告！是否要冻结该用户！";
-				else context = "是否要添加该用户的分销员身份！";
-				
+				if (status == 1) context = `是否要${data.pPutawaytype==1?'下架':'上架'}此产品`;
+				if (status == 2) context = `是否要${data.pAdvertise==1?'不推荐宣传':'推荐宣传'}此产品`;
+				if (status == 3) context = `是否要${data.pRecommendtype==1?'不推荐':'推荐'}此产品`;
 				this.$confirm(context, "提示", {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(() => {
-					if (status == 1) {
-						this.$message.success("已冻结！")
-					} else {
-						this.$message.success("已添加！")
+					if(status == 1) {
+						isputaway({pid:data.pid,pPutawaytype:data.pPutawaytype==1?2:1}).then(res=>{
+							this.$message.success(`已${data.pPutawaytype==1?'下架':'上架'}此产品`);
+							this.getList();
+						})
+					}else if(status == 2){
+						updProductDetails({pid:data.pid,pAdvertise:data.pAdvertise==1?2:1}).then(res=>{
+							this.$message.success('设置成功');
+							this.getList();
+						})
+					}else if(status == 3){
+						isrecommend({pid:data.pid,pRecommendtype:data.pRecommendtype==1?0:1}).then(res=>{
+							this.$message.success('设置成功');
+							this.getList();
+						})
+					}else if(status == 4){
+						delproduce({pid:data.pid}).then(res=>{
+							this.$message.success("删除成功");
+							this.getList();
+						})
 					}
 				})
 			},
