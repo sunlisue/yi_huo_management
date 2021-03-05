@@ -7,11 +7,11 @@
 		</el-breadcrumb>
 		<!-- 头部 -->
 		<div class="product-header el-header-normal-margin-top">
-			<el-input size="mini" v-model="form.pName" class="el-input-normal-width el-input-normal-margin-right" placeholder="订单号"></el-input>
-			<el-input size="mini" v-model="form.pName" class="el-input-normal-width el-input-normal-margin-right" placeholder="地址"></el-input>
-			<el-input size="mini" v-model="form.pName" class="el-input-normal-width el-input-normal-margin-right" placeholder="收件人"></el-input>
-			<el-input size="mini" v-model="form.pName" class="el-input-normal-width el-input-normal-margin-right" placeholder="商户号"></el-input>
-			<el-input size="mini" v-model="form.pName" class="el-input-normal-width el-input-normal-margin-right" placeholder="分销账号"></el-input>
+			<el-input size="mini" v-model="form.oNumber" class="el-input-normal-width el-input-normal-margin-right" placeholder="订单号"></el-input>
+			<el-input size="mini" v-model="form.defaddress" class="el-input-normal-width el-input-normal-margin-right" placeholder="地址"></el-input>
+			<el-input size="mini" v-model="form.oPeople" class="el-input-normal-width el-input-normal-margin-right" placeholder="收件人"></el-input>
+			<el-input size="mini" v-model="form.muName" class="el-input-normal-width el-input-normal-margin-right" placeholder="商户名"></el-input>
+			<el-input size="mini" v-model="form.userDistributioName" class="el-input-normal-width el-input-normal-margin-right" placeholder="分销账号"></el-input>
 			<div style="margin-top:10px;">
 				<label class="el-input-normal-margin-right">
 					下单日期:
@@ -19,54 +19,53 @@
 					start-placeholder="开始日期" end-placeholder="结束日期">
 					</el-date-picker>
 				</label>
-				<el-select size="mini" v-model="form.pType" placeholder="支付类型" class="el-input-normal-margin-right el-input-normal-select-width">
-					<el-option v-for="(item,index) in selcategoryArray" :key="index" :value="item.cId" :label="item.cType"></el-option>
+				<el-select size="mini" v-model="form.oType" placeholder="支付类型" class="el-input-normal-margin-right el-input-normal-select-width">
+					<el-option :value="0" label="未选择" />
+					<el-option :value="1" label="未支付" />
+					<el-option :value="2" label="待发货" />
+					<el-option :value="3" label="申请退款中" />
+					<el-option :value="4" label="已退款" />
+					<el-option :value="5" label="已发货" />
+					<el-option :value="6" label="已完成" />
+					<el-option :value="7" label="已取消" />
 				</el-select>
-				<el-select size="mini" v-model="form.pBrandid" placeholder="订单类型" class="el-input-normal-margin-right el-input-normal-select-width">
-					<el-option v-for="(item,index) in selectBrandArray" :key="index" :value="item.bId" :label="item.bName"></el-option>
+				<el-select size="mini" v-model="form.oDistribution" placeholder="订单类型" class="el-input-normal-margin-right el-input-normal-select-width">
+					<el-option :value="0" label="未选择" />
+					<el-option :value="1" label="分销账单" />
+					<el-option :value="2" label="普通账单" />
 				</el-select>
 				<el-button size="mini" type="primary" @click="getList('query')">快速查询</el-button>
 				<el-button size="mini" type="primary" @click="reset">重置</el-button>
 				<el-button size="mini" type="primary" @click="reset">验证</el-button>
 			</div>
-			
 		</div>
 		<!-- 身体 -->
 		<div class="product-body el-body-normal-margin-top">
 			<el-table :max-height="600" :data="tableData" size="mini" stripe style="width: 100%" border tooltip-effect="dark" :header-cell-style="{ background: '#eef1f6', color: '#606266' }" ref="multipleTable">
 				<el-table-column type="selection" width="50"></el-table-column>
 				<el-table-column type="index" label="序号" width="50"></el-table-column>
-				<el-table-column prop="oNumber" label="订单号" width="130"></el-table-column>
-				<!-- <el-table-column label="oNumber" width="125"></el-table-column> -->
-				<!-- <el-table-column  label="产品价格" width="100">
-					<template slot-scope="scope">
-						<div>原价：{{scope.row.pPrice}}</div>
-						<div>现价：{{scope.row.pPricef}}</div>
-					</template>
-				</el-table-column>
-				<el-table-column label="分销比例" width="120">
-					<template slot-scope="scope">
-						<span>分销比例：{{scope.row.distributorRatio}}%</span>
-					</template>
-				</el-table-column>
-				<el-table-column label="产品评分">
-					<template slot-scope="scope">
-						<span>{{scope.row.pGrade}}分</span>
-					</template>
-				</el-table-column> -->
-				<el-table-column prop="defaddress" label="详细地址"></el-table-column>
-				<el-table-column label="收件人" prop="oPeople" width="150"></el-table-column>
-				<el-table-column prop="uName" label="下单账号"></el-table-column>
-				<el-table-column prop="pName" label="下单产品"></el-table-column>
-				<el-table-column prop="pColorname" label="颜色"></el-table-column>
-				<el-table-column prop="pNum" label="产品数量"></el-table-column>
-				<el-table-column prop="oPrice" label="订单价格"></el-table-column>
+				<el-table-column prop="oNumber" label="订单号" width="150"></el-table-column>
+				<el-table-column prop="defaddress" label="详细地址" width="150"></el-table-column>
+				<el-table-column label="收件人" prop="oPeople" width="100"></el-table-column>
+				<el-table-column prop="uName" label="下单账号" width="150"></el-table-column>
+				<el-table-column prop="pName" label="下单产品" width="300"></el-table-column>
+				<el-table-column prop="pColorname" label="颜色" width="150"></el-table-column>
+				<el-table-column prop="pNum" label="产品数量" width="100"></el-table-column>
+				<el-table-column prop="oPrice" label="订单价格" width="100"></el-table-column>
 				<el-table-column prop="oTime" width="140" label="下单时间"></el-table-column>
-				<el-table-column prop="sTitle" label="支付状态"></el-table-column>
-				<el-table-column prop="sTitle" label="订单类型"></el-table-column>
-				<el-table-column prop="sTitle" label="所属商家"></el-table-column>
-				<el-table-column prop="sTitle" label="分销ID"></el-table-column>
-				<el-table-column prop="sTitle" label="分销账号"></el-table-column>
+				<el-table-column label="支付状态">
+					<template slot-scope="scope">
+						{{scope.row.oType | oType}}
+					</template>
+				</el-table-column>
+				<el-table-column label="订单类型">
+					<template slot-scope="scope">
+						{{scope.row.oDistribution | oType}}
+					</template>
+				</el-table-column>
+				<el-table-column prop="muName" label="所属商家" width="150"></el-table-column>
+				<el-table-column prop="distributionUid" label="分销ID" width="150"></el-table-column>
+				<el-table-column prop="userDistributioName" label="分销账号" width="150"></el-table-column>
 			</el-table>
 		</div>
 		<!-- 底部 -->
@@ -78,13 +77,11 @@
 
 <script>
 	import { selOrderAllPlatform } from "@/api/payMG.js";
-	import { getAllBrand } from "@/api/basisMG.js";
 	import Pagination from "@/components/Pagination.vue"
 	export default {
 		name: "orderFromAll",
 		components:{Pagination},
 		data() {
-			let isme = JSON.parse(localStorage.getItem("userdata")).id;
 			return {
 				dateDouble: "",
 				tableData: [],
@@ -108,38 +105,19 @@
 		},
 		watch: {
 			dateDouble(res){
-				this.form.startTime = res[0];
-				this.form.stopTime = res[1];
+				this.form.oTime = res[0];
+				this.form.fTime = res[1];
 			}
 		},
 		created() {
 			this.getList();
 		},
 		methods: {
-			// 表格里的点击事件
-			tableBtn(data, status) {
-				let context;
-				console.log(data, status);
-				if (status == 1) context = "警告！是否要冻结该用户！";
-				else context = "是否要添加该用户的分销员身份！";
-				
-				this.$confirm(context, "提示", {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
-					if (status == 1) {
-						this.$message.success("已冻结！")
-					} else {
-						this.$message.success("已添加！")
-					}
-				})
-			},
 			// 获取列表
 			getList(options) {
-				if(options == "query"){  //快速查找
-					this.form.current = 0;
-					this.form.size = 0;
+				if(options == 'query'){
+					this.form.current = 1;
+					this.form.size = 5;
 				}else if(options){
 					this.form.current = options.currentPage;
 					this.form.size = options.pageSize;
@@ -158,15 +136,7 @@
 				this.form.current = 1;
 				this.form.size = 5;
 				this.getList();
-			},
-			async getAllBrand(){
-				let res = await getAllBrand({});
-				if (res.code === 200) {
-					return res;
-				} else {
-					this.$message.error(res.msg);
-				}
-			},
+			}
 		}
 	}
 </script>

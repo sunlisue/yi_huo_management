@@ -13,7 +13,7 @@
 			<el-table :max-height="700" class="el-header-normal-margin-top" size="mini" id="table" :data="tableData" v-loading="isTableLoading"
 			 border :header-cell-style="{ background: '#eef1f6', color: '#606266' }" :style="{ width: `${windowWidth - 260}px` }">
 				<el-table-column type="selection" width="40" fixed></el-table-column>
-				<el-table-column type="index" label="顺序" width="50px" fixed></el-table-column>
+				<el-table-column type="index" label="序号" width="50px" fixed></el-table-column>
 				<el-table-column prop="bId" label="品牌ID" width="80px"></el-table-column>
 				<el-table-column prop="bName" label="品牌名称"></el-table-column>
 				<el-table-column prop="bLogo" label="品牌LOGO">

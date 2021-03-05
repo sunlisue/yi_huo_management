@@ -295,3 +295,72 @@ exports.filterPushState = val => {
           break;
   }
 }
+// 支付状态
+exports.oType = val => {
+  switch (val) {
+      case 0:
+          return "未选择";
+      case 1:
+          return "未支付";
+      case 2:
+          return "待发货";
+	  case 3:
+	      return "申请退款中";
+	  case 4:
+	      return "已退款";
+	  case 5:
+	      return "已发货";
+	  case 6:
+	      return "已完成";
+	  case 7:
+	      return "已取消";
+      default:
+          break;
+  }
+}
+// 订单类型
+exports.oDistribution = val => {
+  switch (val) {
+	  case 0:
+	      return "未选择";
+      case 1:
+          return "分销账单";
+      case 2:
+          return "普通账单";
+      default:
+          break;
+  }
+}
+// 订单状态
+exports.rHOType = val => {
+  switch (val) {
+      case 1:
+          return "未支付";
+      case 2:
+          return "待发货";
+	  case 3:
+	      return "申请退款中";
+	  case 4:
+	      return "已退款";
+	  case 5:
+	      return "已发货";
+	  case 6:
+	      return "已完成";
+	  case 7:
+	      return "已取消";
+	  case 8:
+	      return "删除";
+	  case 9:
+	      return "取消退款";
+	  case 10:
+	      return "换货申请中";
+	  case 11:
+	      return "申请换货失败";
+	  case 12:
+	      return "申请换货成功";
+	  case 14:
+	      return "待评论";
+      default:
+          return "未知";
+  }
+}
