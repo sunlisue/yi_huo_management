@@ -89,8 +89,14 @@ export const AddBrand = (params) => { return req("post", "/api/commodity/AddBran
 export const selcommodity = (params) => { return req("post", "/api/commodityapi/selcommodity", params) }; 
 // 获取员工秘钥
 export const getMystaffkeys = (params) => { return req("post", "/api/ManagerUserController/getMystaffkeys", params) }; 
-// 获取员工秘钥
+// 删除员工秘钥
 export const delstaffkeys = (params) => { return req("post", "/api/ManagerUserController/delstaffkeys", params) }; 
 // 添加员工秘钥
 export const addMystaffkeys = (params) => { return req("post", "/api/ManagerUserController/addMystaffkeys", params) }; 
+// 获取物流
+export const sleLogisticAll = (params) => { return req("post", "/api/ApiKdwlController/sleLogisticAll", params) }; 
+// 添加物流
+export const insSingleLogistic = (params) => { return req("post", "/api/ApiKdwlController/insSingleLogistic", params) }; 
+// 删除物流
+export const delSingleLogistic = (params) => { return req("post", "/api/ApiKdwlController/delSingleLogistic", params) }; 
 
