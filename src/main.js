@@ -24,7 +24,6 @@ Vue.prototype.$echarts = echarts;
 import axios from 'axios';
 Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;
-
 // 使用element UI
 Vue.use(ElementUI);
 // 过滤器

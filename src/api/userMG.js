@@ -87,4 +87,10 @@ export const delBrand = (params) => { return req("post", "/api/commodity/delBran
 export const AddBrand = (params) => { return req("post", "/api/commodity/AddBrand", params) }; 
 // 获取茶品
 export const selcommodity = (params) => { return req("post", "/api/commodityapi/selcommodity", params) }; 
+// 获取员工秘钥
+export const getMystaffkeys = (params) => { return req("post", "/api/ManagerUserController/getMystaffkeys", params) }; 
+// 获取员工秘钥
+export const delstaffkeys = (params) => { return req("post", "/api/ManagerUserController/delstaffkeys", params) }; 
+// 添加员工秘钥
+export const addMystaffkeys = (params) => { return req("post", "/api/ManagerUserController/addMystaffkeys", params) }; 
 

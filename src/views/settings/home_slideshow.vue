@@ -6,7 +6,7 @@
 			<el-breadcrumb-item>{{$route.name}}</el-breadcrumb-item>
 		</el-breadcrumb>
 		<div class="tab-content">
-			<el-button type="primary" size="small" @click="who=1;dialogVisible=true;">添加首页轮播图</el-button>
+			<el-button type="primary" size="small" @click="restPost">添加首页轮播图</el-button>
 			<el-table :max-height="700" class="el-header-normal-margin-top" size="mini" id="table" :data="tableData" v-loading="isTableLoading"
 			 border stripe :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
 				<el-table-column type="selection" width="40" fixed></el-table-column>
@@ -60,7 +60,7 @@
 				</el-form-item>
 			</el-form>
 			<span slot="footer" class="dialog-footer">
-				<el-button @click="restPost">取 消</el-button>
+				<el-button @click="dialogVisible = false">取 消</el-button>
 				<el-button type="primary" @click="addPost">确 定</el-button>
 			</span>
 		</el-dialog>
@@ -87,10 +87,10 @@
 					oId:""
 				},
 				rules:{
-					sPicurl:[{ required: true, message: '品牌名不能为空', trigger: 'blur' }],
-					sHref:[{ required: true, message: '品牌介绍不能为空', trigger: 'blur' }],
-					sTitle:[{ required: true, message: '品牌logo不能为空', trigger: 'blur' }],
-					oId:[{ required: true, message: '品牌logo不能为空', trigger: 'blur' }]
+					sPicurl:[{ required: true, message: '请上传轮播图', trigger: 'blur' }],
+					sHref:[{ required: true, message: '活动路径不能为空', trigger: 'blur' }],
+					sTitle:[{ required: true, message: '轮播图标题不能为空', trigger: 'blur' }],
+					oId:[{ required: true, message: '请选择对应产品', trigger: 'blur' }]
 				}
 			}
 		},
@@ -116,6 +116,13 @@
 				if(status == 3){
 					this.who = 2;
 					this.dialogVisible = true;
+					this.formDialog = {
+						sPicurl: options.sPicurl,
+						sHref: options.sHref,
+						sTitle: options.sTitle,
+						oId:options.oId,
+						id:options.id
+					}
 				}else{
 					let context = "";
 					if(status == 1) context = `是否要${options.sType==1?'隐藏':'显示'}`;
@@ -140,25 +147,27 @@
 				}
 			},
 			restPost(){
-				this.dialogVisible = false;
-				setTimeout(()=>{
-					for(let i in this.formDialog){
-						this.formDialog[i] = '';
-					}
-				},500)
+				this.who=1;
+				for(let i in this.formDialog){
+					this.formDialog[i] = '';
+				};
+				this.dialogVisible = true;
 			},
 			// 确认
 			addPost(){
 				this.$refs["ruleForm"].validate((valid) => {
 					if(valid){
 						if(this.who == 1){
+							if(this.formDialog.id)delete this.formDialog.id;
 							addhl(this.formDialog).then(res=>{
 								this.$message.success("添加成功");
+								this.dialogVisible=false;
 								this.init();
 							})
-						}else{
+						}else{ 
 							updatehl(this.formDialog).then(res=>{
 								this.$message.success("修改成功");
+								this.dialogVisible=false;
 								this.init();
 							})
 						}

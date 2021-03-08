@@ -5,10 +5,8 @@
 const path = require('path');
 const port = "8808";
 var target;
-if(true)
- target = 'http://192.168.31.75:8808/zklystorenew';
-else 
- target = 'https://yysyh.cxvk.com.cn:8801/zklystore';
+ target = 'http://192.168.31.77:8808/zklystorenew';
+ // target = 'https://yysyh.cxvk.com.cn:8801/zklystore';
 console.log(target)
 module.exports = {
 	dev: {
