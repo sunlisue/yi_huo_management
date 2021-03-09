@@ -13,7 +13,7 @@
 				<el-table-column type="index" label="序号" width="50" fixed></el-table-column>
 				<el-table-column prop="bId" label="品牌ID" width="80"></el-table-column>
 				<el-table-column prop="bName" label="品牌名称" width="250"></el-table-column>
-				<el-table-column prop="bLogo" label="品牌LOGO" width="200">
+				<el-table-column prop="bLogo" label="品牌LOGO" width="205">
 					<template slot-scope="props">
 						<el-image style="width: 180px; height: 100px;" :src="props.row.bLogo" fit="cover"></el-image>
 					</template>
