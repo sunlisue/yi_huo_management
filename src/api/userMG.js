@@ -39,3 +39,5 @@ export const delc = (params) => { return req("post", "/api/commodity/delc", para
 export const hidec = (params) => { return req("post", "/api/commodity/hidec", params) }; 
 // 设置或取消镇店之宝
 export const upMerchantTreasureProduct = (params) => { return req("post", "/api/merchantbrandapi/upMerchantTreasureProduct", params) }; 
+// 发货管理
+export const selOrderfromByShipments = (params) => { return req("post", "/api/orderapi/selOrderfromByShipments", params) };
