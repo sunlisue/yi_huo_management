@@ -19,6 +19,7 @@ import navcon from '../components/navcon.vue';
 import leftnav from '../components/leftnav.vue';
 import "../../static/js/sockjs.min.js";
 import "../../static/js/stomp.js";
+let _this;
 export default {
   name: 'index',
   data() {
@@ -54,7 +55,7 @@ export default {
 				function(d) {
 					var message = d.body;
 					var messages = message.split(";");
-					console.log(messages);
+					console.log('正在测试',messages);
 					Notification.requestPermission(function(status) {
 						if (status === "granted") {
 							new Notification(messages);
@@ -67,13 +68,14 @@ export default {
 		};
 		// 断开连接
 		var on_error = function() {
-			this.sendRabbitmq();
+			_this.sendRabbitmq();
 			console.error("断开重新连接,error");
 		};
 		client.connect("read", "read", on_connect, on_error, "/");
 	},
    },
   created() {
+	_this = this;
     // 监听
     this.$root.Bus.$on('toggle', value => {
       if (value) {
@@ -84,7 +86,7 @@ export default {
         }, 300)
       }
     });
-		this.sendRabbitmq();
+	this.sendRabbitmq();
   },
   beforeUpdate() {},
   // 挂载前状态(里面是操作)
