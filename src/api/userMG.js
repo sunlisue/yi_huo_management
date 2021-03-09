@@ -99,4 +99,3 @@ export const sleLogisticAll = (params) => { return req("post", "/api/ApiKdwlCont
 export const insSingleLogistic = (params) => { return req("post", "/api/ApiKdwlController/insSingleLogistic", params) }; 
 // 删除物流
 export const delSingleLogistic = (params) => { return req("post", "/api/ApiKdwlController/delSingleLogistic", params) }; 
-
