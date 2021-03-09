@@ -127,19 +127,19 @@
 				loading:false,
 			}
 		},
-	async mounted() {
+	 mounted() {
 			if(!this.$route.query.pid){
 				this.loading = true;
 			}else{
 				// 详情
-				await productDetails({pid: this.$route.query.pid}).then(res => {this.form = res.productDetails;this.loading=true;this.cIdMap(res.productDetails.pType)});				
+				 productDetails({pid: this.$route.query.pid}).then(res => {this.form = res.productDetails;this.loading=true;this.cIdMap(res.productDetails.pType)});				
 			}
 			// 品牌列表
-			await getAllBrand().then(res=>{this.allBrandArray.push(...res.allBrand)})
+			 getAllBrand().then(res=>{this.allBrandArray.push(...res.allBrand)})
 			// 系列列表
-			await getAllseries().then(res=>{this.getAllseriesArray.push(...res.series);})
+			 getAllseries().then(res=>{this.getAllseriesArray.push(...res.series);})
 			// 产品类型
-			await selcategory().then(res=>{this.classCh(res.datalist)});
+			 selcategory().then(res=>{this.classCh(res.datalist)});
 			this.disabled=this.$route.query.show=='true';
 		},
 		methods: {

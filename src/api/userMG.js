@@ -122,6 +122,10 @@ export const addManagerUser = (params) => { return req("post", "/api/ManagerUser
 export const insSetting = (params) => { return req("post", "/api/SettingController/insSetting", params) };
 // 获取基础设置
 export const getSetting = (params) => { return req("post", "/api/SettingController/getSetting", params) };
+// 宣传产品
+export const selAdvertiseProductDetailsAll = (params) => { return req("post", "/api/commodity/selAdvertiseProductDetailsAll", params) };
+// 生成二维码
+export const getQR = (params) => { return req("post", "/api/CreateQRAPI/getQR", params) };
 
 
 

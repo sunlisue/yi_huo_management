@@ -17,6 +17,8 @@
 // 导入组件
 import navcon from '../components/navcon.vue';
 import leftnav from '../components/leftnav.vue';
+import "../../static/js/sockjs.min.js";
+import "../../static/js/stomp.js";
 export default {
   name: 'index',
   data() {
@@ -26,11 +28,51 @@ export default {
     }
   },
   // 注册组件
-  components: {
-    navcon,
-    leftnav
-  },
-  methods: {},
+  components: {navcon,leftnav},
+  methods: {
+	sendRabbitmq() {
+		var ws;
+		if (typeof WebSocket === "function") {
+			ws = new WebSocket("wss://yysyh.cxvk.com.cn/ws/");
+			console.log("WebSocket!!!!!!!!!!!");
+		} else {
+			//wss://yysyh.cxvk.com.cn:15674/ws
+			ws = new SockJS("http://101.200.147.211:15674/stomp");
+			console.log("SockJS!!!!!!!!!!!!!");
+		}
+		// Init Client
+		var client = Stomp.over(ws);
+		// SockJS does not support heart-beat: disable heart-beats
+		// client will send heartbeats every xxxms
+		client.heartbeat.outgoing = 0;
+		// client does not want to receive heartbeats
+		client.heartbeat.incoming = 0;
+		// Declare on_connect
+		var on_connect = () => {
+			client.subscribe(
+				"/queue/hinthost",
+				function(d) {
+					var message = d.body;
+					var messages = message.split(";");
+					console.log(messages);
+					Notification.requestPermission(function(status) {
+						if (status === "granted") {
+							new Notification(messages);
+						} else {
+							alert(messages);
+						}
+					});
+				}
+			);
+		};
+		// 断开连接
+		var on_error = function() {
+			this.sendRabbitmq();
+			console.error("断开重新连接,error");
+		};
+		client.connect("read", "read", on_connect, on_error, "/");
+	},
+   },
   created() {
     // 监听
     this.$root.Bus.$on('toggle', value => {
@@ -42,6 +84,7 @@ export default {
         }, 300)
       }
     });
+		this.sendRabbitmq();
   },
   beforeUpdate() {},
   // 挂载前状态(里面是操作)

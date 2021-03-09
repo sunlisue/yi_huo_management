@@ -93,6 +93,7 @@ export default {
 		},
 		onSuccess(res){
 			this.form.propagandizePic = res.url;
+
 		}
 	}
 }

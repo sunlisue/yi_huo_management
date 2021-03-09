@@ -7,18 +7,23 @@
 		</el-breadcrumb>
 		<!-- 头部 -->
 		<div class="product-header el-header-normal-margin-top">
-			<el-input v-model="form.pName" class="el-input-normal-width el-input-normal-margin-right" placeholder="产品名称"></el-input>
+			<el-input v-model="form.pName" class="el-input-normal-width el-input-normal-margin-right"
+				placeholder="产品名称"></el-input>
 			<label class="el-input-normal-margin-right">
 				创建日期:
 				<el-date-picker v-model="dateDouble" type="daterange" value-format="yyyy-MM-dd" range-separator="至"
-				 start-placeholder="开始日期" end-placeholder="结束日期">
+					start-placeholder="开始日期" end-placeholder="结束日期">
 				</el-date-picker>
 			</label>
-			<el-select v-model="form.pType" placeholder="请选择分类" class="el-input-normal-margin-right el-input-normal-select-width">
-				<el-option v-for="(item,index) in selcategoryArray" :key="index" :value="item.cId" :label="item.cType"></el-option>
+			<el-select v-model="form.pType" placeholder="请选择分类"
+				class="el-input-normal-margin-right el-input-normal-select-width">
+				<el-option v-for="(item,index) in selcategoryArray" :key="index" :value="item.cId" :label="item.cType">
+				</el-option>
 			</el-select>
-			<el-select v-model="form.pBrandid" placeholder="请选择品牌" class="el-input-normal-margin-right el-input-normal-select-width">
-				<el-option v-for="(item,index) in selectBrandArray" :key="index" :value="item.bId" :label="item.bName"></el-option>
+			<el-select v-model="form.pBrandid" placeholder="请选择品牌"
+				class="el-input-normal-margin-right el-input-normal-select-width">
+				<el-option v-for="(item,index) in selectBrandArray" :key="index" :value="item.bId" :label="item.bName">
+				</el-option>
 			</el-select>
 			<el-button type="primary" size="small" @click="getList('query')">快速查询</el-button>
 			<el-button type="primary" size="small" @click="reset">重置</el-button>
@@ -27,7 +32,9 @@
 		</div>
 		<!-- 身体 -->
 		<div class="product-body el-body-normal-margin-top">
-			<el-table @select="selectTble" @select-all="selectAll" :max-height="600" :data="tableData" size="mini" stripe style="width: 100%" border tooltip-effect="dark" :header-cell-style="{ background: '#eef1f6', color: '#606266' }" ref="multipleTable">
+			<el-table @select="selectTble" @select-all="selectAll" :max-height="600" :data="tableData" size="mini"
+				stripe style="width: 100%" border tooltip-effect="dark"
+				:header-cell-style="{ background: '#eef1f6', color: '#606266' }" ref="multipleTable">
 				<el-table-column type="selection" width="50">
 				</el-table-column>
 				<el-table-column type="index" label="序号" width="50">
@@ -39,7 +46,7 @@
 						<el-image style="width: 100px; height: 100px;" :src="scope.row.pCover" fit="cover"></el-image>
 					</template>
 				</el-table-column>
-				<el-table-column  label="产品价格" width="100">
+				<el-table-column label="产品价格" width="100">
 					<template slot-scope="scope">
 						<div>原价：{{scope.row.pPrice}}</div>
 						<div>现价：{{scope.row.pPricef}}</div>
@@ -68,25 +75,33 @@
 				</el-table-column>
 				<el-table-column prop="uStaus" label="推荐状态">
 					<template slot-scope="scope">
-						<span :style="scope.row.pRecommendtype==1?'color:green':'color:red'">{{scope.row.pRecommendtype==1?"已推荐":"未推荐"}}</span>
+						<span
+							:style="scope.row.pRecommendtype==1?'color:green':'color:red'">{{scope.row.pRecommendtype==1?"已推荐":"未推荐"}}</span>
 					</template>
 				</el-table-column>
 				<el-table-column prop="uStaus" label="上下架状态" width="100">
 					<template slot-scope="scope">
-						<span :style="scope.row.pPutawaytype==1?'color:green':'color:red'">{{scope.row.pPutawaytype==1?"上架中":"未上架"}}</span>
+						<span
+							:style="scope.row.pPutawaytype==1?'color:green':'color:red'">{{scope.row.pPutawaytype==1?"上架中":"未上架"}}</span>
 					</template>
 				</el-table-column>
 				<el-table-column prop="uStaus" label="宣传" width="100">
 					<template slot-scope="scope">
-						<span :style="scope.row.pAdvertise==1?'color:green':'color:red'">{{scope.row.pAdvertise==1?"已推荐宣传":"未推荐宣传"}}</span>
+						<span
+							:style="scope.row.pAdvertise==1?'color:green':'color:red'">{{scope.row.pAdvertise==1?"已推荐宣传":"未推荐宣传"}}</span>
 					</template>
 				</el-table-column>
 				<el-table-column width="420" label="操作" fixed="right">
 					<template slot-scope="scope">
-						<el-button :type="scope.row.pPutawaytype==1?'danger':'success'" @click="tableBtn(scope.row,1)" size="small">{{scope.row.pPutawaytype==1?'下架':'上架'}}</el-button>
-						<el-button :type="scope.row.pAdvertise==1?'danger':'success'" @click="tableBtn(scope.row,2)" size="small">{{scope.row.pAdvertise==1?"不推荐宣传":"推荐宣传"}}</el-button>
-						<el-button :type="scope.row.pRecommendtype==1?'danger':'warning'" @click="tableBtn(scope.row,3)" size="small">{{scope.row.pRecommendtype==1?'不推荐':'推荐'}}</el-button>
-						<el-button type="primary" @click="$router.push({query:{pid:scope.row.pid,show:true},path:'/commodity/product_ch.jsp'})" size="small">查看</el-button>
+						<el-button :type="scope.row.pPutawaytype==1?'danger':'success'" @click="tableBtn(scope.row,1)"
+							size="small">{{scope.row.pPutawaytype==1?'下架':'上架'}}</el-button>
+						<el-button :type="scope.row.pAdvertise==1?'danger':'success'" @click="tableBtn(scope.row,2)"
+							size="small">{{scope.row.pAdvertise==1?"不推荐宣传":"推荐宣传"}}</el-button>
+						<el-button :type="scope.row.pRecommendtype==1?'danger':'warning'" @click="tableBtn(scope.row,3)"
+							size="small">{{scope.row.pRecommendtype==1?'不推荐':'推荐'}}</el-button>
+						<el-button type="primary"
+							@click="$router.push({query:{pid:scope.row.pid,show:true},path:'/commodity/product_ch.jsp'})"
+							size="small">查看</el-button>
 						<el-button type="danger" @click="tableBtn(scope.row,4)" size="small">删除</el-button>
 					</template>
 				</el-table-column>
@@ -101,13 +116,23 @@
 
 <script>
 	import {
-		selcommoditise, selcategory,isputaway,isrecommend,delproduce,batchIsPutAway,updProductDetails
+		selcommoditise,
+		selcategory,
+		isputaway,
+		isrecommend,
+		delproduce,
+		batchIsPutAway,
+		updProductDetails
 	} from "@/api/userMG.js";
-	import { getAllBrand } from "@/api/basisMG.js";
+	import {
+		getAllBrand
+	} from "@/api/basisMG.js";
 	import Pagination from "@/components/Pagination.vue"
 	export default {
 		name: "product",
-		components:{Pagination},
+		components: {
+			Pagination
+		},
 		data() {
 			let isme = JSON.parse(localStorage.getItem("userdata")).id;
 			return {
@@ -120,48 +145,51 @@
 					stopTime: "", // 结束日期
 					pType: "", //分类
 					pBrandid: "", //品牌
-					size:5,
-					current:1,
+					size: 5,
+					current: 1,
 					// isme
 				},
-				upDownAll:[],
-				selcategoryArray:[],
-				selectBrandArray:[],
+				upDownAll: [],
+				selcategoryArray: [],
+				selectBrandArray: [],
 			}
 		},
 		watch: {
-			dateDouble(res){
+			dateDouble(res) {
 				this.form.startTime = res[0];
 				this.form.stopTime = res[1];
 			}
 		},
 		created() {
 			this.getList();
-			selcategory().then(res=>{
+			selcategory().then(res => {
 				this.selcategoryArray = res.datalist;
 			});
-			this.getAllBrand().then(data => {
-			this.selectBrandArray = data.allBrand;
-      });
+			getAllBrand().then(res => {
+				this.selectBrandArray = res.allBrand;
+			})
 		},
 		methods: {
-			upDownAllAjax(pPutawaytype){
-				let pIds="";
-				this.upDownAll.map((res,index)=>{
-					if(this.upDownAll.length == (index+1))pIds = pIds+res.pid;
-					else pIds = pIds+res.pid+';';	
+			upDownAllAjax(pPutawaytype) {
+				let pIds = "";
+				this.upDownAll.map((res, index) => {
+					if (this.upDownAll.length == (index + 1)) pIds = pIds + res.pid;
+					else pIds = pIds + res.pid + ';';
 				})
-				batchIsPutAway({pIds,pPutawaytype}).then(res=>{			
+				batchIsPutAway({
+					pIds,
+					pPutawaytype
+				}).then(res => {
 					this.$message.success("设置成功");
 					this.$refs.multipleTable.clearSelection();
-					this.upDownAll=[];
+					this.upDownAll = [];
 					this.getList();
 				})
 			},
-			selectTble(options,row){
+			selectTble(options, row) {
 				this.upDownAll = options;
 			},
-			selectAll(options){
+			selectAll(options) {
 				this.upDownAll = options;
 			},
 			// 表格里的点击事件
@@ -175,23 +203,34 @@
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(() => {
-					if(status == 1) {
-						isputaway({pid:data.pid,pPutawaytype:data.pPutawaytype==1?2:1}).then(res=>{
+					if (status == 1) {
+						isputaway({
+							pid: data.pid,
+							pPutawaytype: data.pPutawaytype == 1 ? 2 : 1
+						}).then(res => {
 							this.$message.success(`已${data.pPutawaytype==1?'下架':'上架'}此产品`);
 							this.getList();
 						})
-					}else if(status == 2){
-						updProductDetails({pid:data.pid,pAdvertise:data.pAdvertise==1?2:1}).then(res=>{
+					} else if (status == 2) {
+						updProductDetails({
+							pid: data.pid,
+							pAdvertise: data.pAdvertise == 1 ? 2 : 1
+						}).then(res => {
 							this.$message.success('设置成功');
 							this.getList();
 						})
-					}else if(status == 3){
-						isrecommend({pid:data.pid,pRecommendtype:data.pRecommendtype==1?0:1}).then(res=>{
+					} else if (status == 3) {
+						isrecommend({
+							pid: data.pid,
+							pRecommendtype: data.pRecommendtype == 1 ? 0 : 1
+						}).then(res => {
 							this.$message.success('设置成功');
 							this.getList();
 						})
-					}else if(status == 4){
-						delproduce({pid:data.pid}).then(res=>{
+					} else if (status == 4) {
+						delproduce({
+							pid: data.pid
+						}).then(res => {
 							this.$message.success("删除成功");
 							this.getList();
 						})
@@ -200,10 +239,10 @@
 			},
 			// 获取列表
 			getList(options) {
-				if(options == "query"){  //快速查找
+				if (options == "query") { //快速查找
 					this.form.current = 0;
 					this.form.size = 0;
-				}else if(options){
+				} else if (options) {
 					this.form.current = options.currentPage;
 					this.form.size = options.pageSize;
 				}
@@ -221,15 +260,7 @@
 				this.form.current = 1;
 				this.form.size = 5;
 				this.getList();
-			},
-			async getAllBrand(){
-				let res = await getAllBrand({});
-				if (res.code === 200) {
-					return res;
-				} else {
-					this.$message.error(res.msg);
-				}
-			},
+			}
 		}
 	}
 </script>
