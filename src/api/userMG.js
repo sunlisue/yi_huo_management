@@ -100,3 +100,28 @@ export const insSingleLogistic = (params) => { return req("post", "/api/ApiKdwlC
 // 删除物流
 export const delSingleLogistic = (params) => { return req("post", "/api/ApiKdwlController/delSingleLogistic", params) }; 
 
+// 添加类型
+export const addMyCategory = (params) => { return req("post", "/api/merchantbrandapi/addMyCategory", params) }; 
+// 修改类型
+export const upMycategory = (params) => { return req("post", "/api/merchantbrandapi/upMycategory", params) }; 
+// 显示隐藏
+export const hideMyCategory = (params) => { return req("post", "/api/merchantbrandapi/hideMyCategory", params) }; 
+// 删除
+export const delMyCategory = (params) => { return req("post", "/api/merchantbrandapi/delMyCategory", params) }; 
+// 列表
+export const selMyAllcategory = (params) => { return req("post", "/api/merchantbrandapi/selMyAllcategory", params) }; 
+// 后台用户列表
+export const selmanagerUserAll = (params) => { return req("post", "/api/ManagerUserController/selmanagerUserAll", params) }; 
+// 后台用户列表 - 删除
+export const delManagerUser = (params) => { return req("post", "/api/ManagerUserController/delManagerUser", params) }; 
+// 后台用户列表 - 删除
+export const resetpassword = (params) => { return req("post", "/api/ManagerUserController/resetpassword", params) }; 
+// 后台用户列表 - 添加
+export const addManagerUser = (params) => { return req("post", "/api/ManagerUserController/addManagerUser", params) }; 
+// 基础设置
+export const insSetting = (params) => { return req("post", "/api/SettingController/insSetting", params) };
+// 获取基础设置
+export const getSetting = (params) => { return req("post", "/api/SettingController/getSetting", params) };
+
+
+

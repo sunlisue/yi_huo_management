@@ -11,7 +11,7 @@
 			 border stripe :header-cell-style="{ background: '#eef1f6', color: '#606266' }">
 				<el-table-column type="selection" width="40" fixed></el-table-column>
 				<el-table-column type="index" label="序号" width="50" fixed></el-table-column>
-				<el-table-column prop="bId" label="轮播图图片" width="180">
+				<el-table-column prop="bId" label="轮播图图片" width="185">
 					<template slot-scope="scope">
 						<el-image style="width: 160px; height: 100px;" :src="scope.row.sPicurl" fit="cover" />
 					</template>
@@ -42,7 +42,7 @@
 						<i v-else class="el-icon-plus avatar-uploader-icon"></i>
 					</el-upload>
 				</el-form-item>
-				<el-form-item label="对应产品:" prop="oId">
+				<el-form-item label="对应产品 ( 输入可进行搜索 ):" prop="oId">
 					  <el-select v-model="formDialog.oId" filterable placeholder="请选择">
 					    <el-option
 					      v-for="item in options"
