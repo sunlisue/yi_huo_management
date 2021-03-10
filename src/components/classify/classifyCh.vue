@@ -94,7 +94,6 @@
 				this.form.cId = this.$parent.classifyChData.cId;
 				this.loading = true;
 				selcategoryBypid(this.form).then(res => {
-					console.log(res)
 					this.tableData = res.datalist;
 					this.loading = false;
 				})

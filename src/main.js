@@ -1,5 +1,3 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 // 引入element UI
 import ElementUI from 'element-ui';
@@ -15,12 +13,13 @@ import './assets/icon/iconfont.css'
 import SlideVerify from 'vue-monoplasty-slide-verify';
 Vue.use(SlideVerify);
 
+// 富文本 - 样式
 import "../static/css/fwb.min.css";
 
 // 引入echarts
 import echarts from 'echarts';
 Vue.prototype.$echarts = echarts;
-
+// axios
 import axios from 'axios';
 Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;

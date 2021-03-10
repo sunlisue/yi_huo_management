@@ -74,6 +74,8 @@ const home_slideshow = () => import("@/views/settings/home_slideshow");
 const logisticsshowAll = () => import("@/views/settings/logisticsshowAll");
 // 基础设置
 const BasicsSetting = () => import("@/views/settings/BasicsSetting");
+// 查看二维码
+const lookImage = () => import("@/views/commodity/advertiseProductCh/lookImage")
 
 
 // 账号管理 //
@@ -144,6 +146,13 @@ export default new Router({
 				}
 			},
 			{
+				path: '/commodity/lookImage',
+				name: '宣传产品',
+				component: lookImage,
+				meta: {
+					requireAuth: true
+				}
+			},			{
 				path: '/myproductCh/commentCh',
 				name: '我的产品',
 				component: commentCh,

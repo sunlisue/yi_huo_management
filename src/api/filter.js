@@ -318,6 +318,8 @@ exports.oType = val => {
 	      return "已完成";
 	  case 7:
 	      return "已取消";
+	  case 14:
+	      return "确认收货";
       default:
           break;
   }
