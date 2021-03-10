@@ -20,7 +20,6 @@
 					</el-date-picker>
 				</label>
 				<el-select size="mini" v-model="form.oType" placeholder="支付类型" class="el-input-normal-margin-right el-input-normal-select-width">
-					<el-option :value="0" label="未选择" />
 					<el-option :value="1" label="未支付" />
 					<el-option :value="2" label="待发货" />
 					<el-option :value="3" label="申请退款中" />
@@ -28,9 +27,9 @@
 					<el-option :value="5" label="已发货" />
 					<el-option :value="6" label="已完成" />
 					<el-option :value="7" label="已取消" />
+					<el-option :value="14" label="确认收货" />
 				</el-select>
 				<el-select size="mini" v-model="form.oDistribution" placeholder="订单类型" class="el-input-normal-margin-right el-input-normal-select-width">
-					<el-option :value="0" label="未选择" />
 					<el-option :value="1" label="分销账单" />
 					<el-option :value="2" label="普通账单" />
 				</el-select>
@@ -55,12 +54,12 @@
 				<el-table-column prop="oTime" width="140" label="下单时间"></el-table-column>
 				<el-table-column label="支付状态">
 					<template slot-scope="scope">
-						{{scope.row.oType | oType}}
+						{{scope.row.oType | filterOrder}}
 					</template>
 				</el-table-column>
 				<el-table-column label="订单类型">
 					<template slot-scope="scope">
-						{{scope.row.oDistribution | oType}}
+						{{scope.row.oDistribution | filterOrder}}
 					</template>
 				</el-table-column>
 				<el-table-column prop="muName" label="所属商家" width="150"></el-table-column>
@@ -93,11 +92,11 @@
 					defaddress:"", //地址
 					oTime:"", //订单开始日期
 					fTime:"", //订单结束日期
-					oType:0, //订单类型
+					oType:"", //订单类型
 					oPeople:"", //收件人
 					userDistributioName:"", //分销账号
 					oNumber:"", //订单号
-					oDistribution:0, //订单类型
+					oDistribution:"", //订单类型
 				},
 				selcategoryArray:[],
 				selectBrandArray:[],
