@@ -44,20 +44,20 @@
 		</div>
 		<!-- 录入发货信息 -->
 		<el-dialog :close-on-click-modal="false" center title="录入发货物流信息" :visible.sync="pwdVisible" width="30%">
-			<el-form :model="pwdForm" status-icon :rules="rules" ref="pwdForm" label-width="100px" size="mini">
-				<el-form-item label="物流订单号" prop="pass">
-					<el-input type="password" v-model="pwdForm.pass" autocomplete="off"></el-input>
+			<el-form :model="pwdForm"  :rules="rules" ref="pwdForm" label-width="100px" size="mini">
+				<el-form-item label="物流订单号" prop="loId">
+					<el-input  v-model="pwdForm.loId" ></el-input>
 				</el-form-item>
-				<el-form-item label="物流公司" prop="pass">
-					<el-select v-model="form.pType" placeholder="请选择物流公司"
+				<el-form-item label="物流公司" prop="lId">
+					<el-select v-model="pwdForm.lId" placeholder="请选择物流公司"
 						class="el-input-normal-margin-right el-input-normal-select-width">
 						<el-option v-for="(item, index) in logisticsList" :key="index" :value="item.lId" :label="item.lName">
 						</el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item>
-					<el-button icon="el-icon-close" size="mini" type="primary" @click="submitForm('pwdForm')">提交</el-button>
-					<el-button icon="el-icon-check" size="mini" @click="resetForm('pwdForm')">重置</el-button>
+					<el-button icon="el-icon-check" size="mini" type="primary" @click="submitForm('pwdForm')">提交</el-button>
+					<el-button icon="el-icon-close" size="mini" @click="resetForm('pwdForm')">重置</el-button>
 				</el-form-item>
 			</el-form>
 		</el-dialog>
@@ -69,16 +69,16 @@
 </template>
 
 <script>
-	import { selOrderfromByShipments, sleLogisticAll } from "@/api/userMG.js";
+	import { selOrderfromByShipments, sleLogisticAll, instLogisticOrder } from "@/api/userMG.js";
 	import Pagination from "@/components/Pagination.vue"
 	export default {
 		name: "product",
 		components:{Pagination},
 		data() {
-			let isme = JSON.parse(localStorage.getItem("userdata")).id;
 			return {
 				dateDouble: "",
 				tableData: [],
+				listActive:"",
 				loading: false,
 				form: {
 					oNumber:"", //订单号
@@ -111,30 +111,26 @@
 			this.getList();
 		},
 		methods: {
-			//录入发货信息
-			updatePassword(data) {
-				console.log(data);
-				this.inputForm = JSON.parse(JSON.stringify(this.form));
-				this.pwdVisible = true;
-			},
-			// 表格里的点击事件
-			tableBtn(data, status) {
-				let context;
-				console.log(data, status);
-				if (status == 1) context = "警告！是否要冻结该用户！";
-				else context = "是否要添加该用户的分销员身份！";
-				
-				this.$confirm(context, "提示", {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(() => {
-					if (status == 1) {
-						this.$message.success("已冻结！")
-					} else {
-						this.$message.success("已添加！")
+			submitForm(){
+				this.$refs['pwdForm'].validate(valid => {
+					if(valid){
+						this.pwdForm.oId=this.listActive.oNumber;
+						instLogisticOrder(this.pwdForm).then(res=>{
+							this.$message.success("录入成功");
+							this.pwdVisible = false;
+							this.getList();
+						})
 					}
 				})
+			},
+			  resetForm(formName) {
+				this.$refs[formName].resetFields();
+			  },
+			//录入发货信息
+			updatePassword(data) {
+				this.listActive = data;
+				this.inputForm = JSON.parse(JSON.stringify(this.form));
+				this.pwdVisible = true;
 			},
 			// 获取列表
 			getList(options) {
@@ -152,7 +148,6 @@
 				});
 				sleLogisticAll().then(res => {
 					this.logisticsList = res.logistics;
-					console.log(this.logisticsList);
 				})
 			},
 			// 重置

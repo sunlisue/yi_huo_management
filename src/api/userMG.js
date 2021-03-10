@@ -128,6 +128,7 @@ export const selAdvertiseProductDetailsAll = (params) => { return req("post", "/
 export const getQR = (params) => { return req("post", "/api/CreateQRAPI/getQR", params) };
 // 发货管理
 export const selOrderfromByShipments = (params) => { return req("post", "/api/orderapi/selOrderfromByShipments", params) };
-
+// 录入发货信息
+export const instLogisticOrder = (params) => { return req("post", "/api/ApiKdwlController/instLogisticOrder", params) };
 
 
