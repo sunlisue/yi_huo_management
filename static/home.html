@@ -1,0 +1,780 @@
+<html>
+	<head>
+		<title>Title</title>
+		<meta charset="utf-8">
+		<!-- https://yysyh.cxvk.com.cn:8801/zklystorew -->
+		<!--Morris Chart CSS -->
+		<link rel="stylesheet" href="http://192.168.31.75:8808/zklystorenew/static/assetsall/plugins/morris/morris.css">
+		<link href="http://192.168.31.75:8808/zklystorenew/static/assetsall/css/bootstrap.min.css" rel="stylesheet"
+			type="text/css">
+		<link href="http://192.168.31.75:8808/zklystorenew/static/assetsall/css/icons.css" rel="stylesheet"
+			type="text/css">
+		<link href="http://192.168.31.75:8808/zklystorenew/static/assetsall/css/style.css" rel="stylesheet"
+			type="text/css">
+		<link rel="stylesheet" href="http://192.168.31.75:8808/zklystorenew/static/css/font-some.css" />
+		<link rel="stylesheet" href="http://192.168.31.75:8808/zklystorenew/static/assets/css/font-awesome.min.css">
+		<link rel="stylesheet" href="http://192.168.31.75:8808/zklystorenew/static/assets/css/font-awesome-ie7.min.css">
+		
+		<script type="text/javascript" src="http://192.168.31.75:8808/zklystorenew/static/js/echarts.min.js"></script>
+		<script src="http://192.168.31.75:8808/zklystorenew/static/bootstrap-3.3.7-dist/table/bootstrap-table.min.js">
+		</script>
+		
+		<script
+			src="http://192.168.31.75:8808/zklystorenew/static/bootstrap-3.3.7-dist/table/locale/bootstrap-table-zh-CN.min.js">
+		</script>
+		<script src="http://192.168.31.75:8808/zklystorenew/static/js/jquery.min.js"></script>
+		<script type="text/javascript" src="http://192.168.31.75:8808/zklystorenew/static/js/echarts.min.js"></script>
+	</head>
+	<style>
+		td {
+			vertical-align: middle !important;
+			text-align: center;
+			border: white 0px solid;
+		}
+
+		th {
+			vertical-align: middle !important;
+			text-align: center;
+		}
+	</style>
+	<body>
+
+		<!-- Top Bar End -->
+		<div class="page-content-wrapper ">
+
+			<div class="container-fluid">
+
+				<div class="row" style="margin-top: 10px">
+					<div class="col-md-6 col-xl-3">
+						<div class="mini-stat clearfix bg-white">
+							<span class="mini-stat-icon">$</span>
+							<div class="mini-stat-info text-right text-light">
+								<span class="counter text-white" id="ordernum">0</span> 订单总数
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-xl-3">
+						<div class="mini-stat clearfix bg-success">
+							<span class="mini-stat-icon">$</span>
+							<div class="mini-stat-info text-right text-light">
+								<span class="counter text-white" id="orderrefundnum">0</span> 退款单总数
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-xl-3">
+						<div class="mini-stat clearfix bg-orange">
+							<span class="mini-stat-icon">$</span>
+							<div class="mini-stat-info text-right text-light">
+								<span id="orderunfinishednum" class="counter text-white">0</span> 未完成订单总数
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-xl-3">
+						<div class="mini-stat clearfix bg-info">
+							<span class="mini-stat-icon">$</span>
+							<div class="mini-stat-info text-right text-light">
+								<span class="counter text-white" id="orderovernum">0</span> 已完成订单总数
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-8">
+						<div class="card card-sec ">
+							<div class="card-body">
+								<h4 class="mt-0 header-title">成交金额统计</h4>
+
+
+
+								<div id="main" style="height: 300px">
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="card card-sec m-b-30">
+							<div class="card-body">
+								<h4 class="mt-0 header-title">待完成事项</h4>
+								<div class=" row">
+									<div class="col-xl-3">
+										<h5>退款审核共</h5>
+									</div>
+									<div class="box-items" id="TNum">
+										<li class="number-item"><span><i>0123456789</i></span></li>
+									</div>
+									<div class="col-xl-3">
+										<h5>条未处理</h5>
+									</div>
+
+								</div>
+
+
+								<div class=" row">
+									<div class="col-xl-3">
+										<h5>店主审核共</h5>
+									</div>
+									<div class="box-items" id="TNum2">
+										<li class="number-item"><span><i>0123456789</i></span></li>
+									</div>
+									<div class="col-xl-3">
+										<h5>条未处理</h5>
+									</div>
+								</div>
+
+
+								<div class=" row">
+									<div class="col-xl-3">
+										<h5>用户订单共</h5>
+									</div>
+									<div class="box-items" id="TNum3">
+										<li class="number-item"><span><i>0123456789</i></span></li>
+									</div>
+									<div class="col-xl-3">
+										<h5>个未发货</h5>
+									</div>
+								</div>
+
+								<div class=" row">
+									<div class="col-xl-3">
+										<h5>补货预警共</h5>
+									</div>
+									<div class="box-items" id="TNum4">
+										<li class="number-item"><span><i>0123456789</i></span></li>
+									</div>
+									<div class="col-xl-3">
+										<h5>个未处理</h5>
+									</div>
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="row">
+					<div class="col-md-8">
+						<div class="card card-sec ">
+							<div class="card-body">
+								<h4 class="mt-0 header-title">以往登录历史</h4>
+
+								<table id="table" class="table table-condensed table-no-bordered">
+								</table>
+
+
+							</div>
+						</div>
+					</div>
+
+
+					<div class="col-md-4">
+						<div class="card card-sec ">
+							<div class="card-body">
+								<h4 class="mt-0 header-title">销量排名前八产品</h4>
+
+								<div id="main2" style="height: 370px">
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- end row -->
+
+			</div>
+			<!-- container -->
+
+		</div>
+
+
+		<!-- jQuery  -->
+		<script src="http://192.168.31.75:8808/zklystorenew/static/assetsall/js/jquery.min.js"></script>
+		<script src="http://192.168.31.75:8808/zklystorenew/static/assetsall/js/popper.min.js"></script>
+		<script src="http://192.168.31.75:8808/zklystorenew/static/assetsall/js/bootstrap.min.js"></script>
+		<script src="http://192.168.31.75:8808/zklystorenew/static/assetsall/js/modernizr.min.js"></script>
+		<script src="http://192.168.31.75:8808/zklystorenew/static/assetsall/js/detect.js"></script>
+		<script src="http://192.168.31.75:8808/zklystorenew/static/assetsall/js/fastclick.js"></script>
+		<script src="http://192.168.31.75:8808/zklystorenew/static/assetsall/js/jquery.slimscroll.js"></script>
+		<script src="http://192.168.31.75:8808/zklystorenew/static/assetsall/js/jquery.blockUI.js"></script>
+		<script src="http://192.168.31.75:8808/zklystorenew/static/assetsall/js/waves.js"></script>
+		<script src="http://192.168.31.75:8808/zklystorenew/static/assetsall/js/jquery.nicescroll.js"></script>
+		<script src="http://192.168.31.75:8808/zklystorenew/static/assetsall/js/jquery.scrollTo.min.js"></script>
+		<script src="http://192.168.31.75:8808/zklystorenew/static/bootstrap-3.3.7-dist/table/bootstrap-table.min.js">
+		</script>
+		<script
+			src="http://192.168.31.75:8808/zklystorenew/static/bootstrap-3.3.7-dist/table/locale/bootstrap-table-zh-CN.min.js">
+		</script>
+
+		<!-- <script src="http://192.168.31.75:8808/zklystorenew/static/assetsall/plugins/morris/morris.min.js"></script>
+<script src="http://192.168.31.75:8808/zklystorenew/static/assetsall/plugins/raphael/raphael-min.js"></script>
+
+
+<script src="http://192.168.31.75:8808/zklystorenew/static/assetsall/pages/dashborad.js"></script> -->
+
+
+		<!-- App js -->
+		<script src="http://192.168.31.75:8808/zklystorenew/static/assetsall/js/app.js"></script>
+
+	</body>
+</html>
+<script type="text/javascript">
+	var orderrefundingnum = 0;
+	var orderoverberorenum = 0;
+	var usertuixiao = 0;
+	var replenishment = 0;
+	var date = [];
+	var daymoney = new Array();
+	var dayorder = new Array();
+	var sales = new Array();
+	var salesName = new Array();
+	$(function() {
+		$.ajax({
+			type: "post",
+			url: "http://192.168.31.75:8808/zklystorenew/commodity/gethomedata",
+			dataTypa: "json",
+			success: function(data) {
+				// if (data.code == "500") {
+				// 	alert("登录超时，请重新登录！");
+				// 	parent.location.href = "http://192.168.31.75:8808/zklystorenew/jsps/login.jsp";
+				// }
+				$("#ordernum").text(data.ordernum);
+				$("#orderrefundnum").text(data.orderrefundnum);
+				$("#orderunfinishednum").text(data.orderunfinishednum);
+				$("#orderovernum").text(data.orderovernum);
+				orderrefundingnum = data.orderrefundingnum;
+				orderoverberorenum = data.orderoverberorenum;
+				usertuixiao = data.usertuixiao;
+				replenishment = data.replenishment;
+				for (var i = 0; i < data.monthorderfroms.length; i++) {
+					daymoney.push(data.monthorderfroms[i].oPrice.toFixed(2))
+					dayorder.push(data.monthorderfroms[i].daunum)
+					date.push(data.monthorderfroms[i].oPaytime)
+				}
+
+				for (var i2 = 0; i2 < data.sales.length; i2++) {
+					sales.push({
+						"value": data.sales[i2].pNum,
+						"name": data.sales[i2].pName
+					})
+					salesName.push(data.sales[i2].pName)
+				}
+
+				myChart.hideLoading(); //隐藏加载动画
+				myChart.setOption({ //加载数据图表
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						data: date
+					},
+					series: [{
+							name: '当日金额',
+							type: 'line',
+							data: daymoney,
+							markPoint: {
+								data: [{
+										type: 'max',
+										name: '最大值'
+									},
+									{
+										type: 'min',
+										name: '最小值'
+									}
+								]
+							},
+							markLine: {
+								data: [{
+									type: 'average',
+									name: '平均值'
+								}]
+							}
+						},
+						{
+							name: '当日订单数量',
+							type: 'line',
+							data: dayorder
+								/*,
+								                         markPoint: {
+								                         data: [
+								                         {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
+								                         ]
+								                         }*/
+								,
+							markLine: {
+								data: [{
+										type: 'average',
+										name: '平均值'
+									},
+									[{
+										symbol: 'none',
+										x: '90%',
+										yAxis: 'max'
+									}, {
+										symbol: 'circle',
+										label: {
+											position: 'start',
+											formatter: '最大值'
+										},
+										type: 'max',
+										name: '最高点'
+									}]
+								]
+							}
+						}
+					]
+				});
+
+
+
+
+				myChart2.hideLoading(); //隐藏加载动画
+				myChart2.setOption({ //加载数据图表
+					legend: {
+						x: "center",
+						y: "bottom",
+						data: salesName
+					},
+					series: [{
+						name: "总销售量",
+						type: "pie",
+						radius: [30, 90],
+						center: ["50%", "50%"],
+						roseType: "area",
+						data: sales
+					}]
+
+				});
+
+			}
+		});
+	})
+
+	var chartNum = ['0', '0', '0', '0', '0', '0']; // 默认总数
+	start();
+
+	function start() {
+		var strHtml = "";
+		for (var i = 0; i < chartNum.length; i++) {
+			strHtml += '<li class="number-item">\n' +
+				'                <span><i class="item" ref="numberItem">0123456789</i></span>\n' +
+				'            </li>';
+		}
+		$("#TNum").html(strHtml);
+
+		// 定时改变数字
+		setInterval(function setInt() {
+			toOrderNum(orderrefundingnum);
+			setNumberTransform();
+		}, 1000)
+	}
+
+	function toOrderNum(num) {
+		num = num.toString() // 数字变成字符串
+		if (num.length < 6) { // 如未满位数，添加"0"补位
+			num = '0' + num
+			toOrderNum(num) // 递归添加"0"补位
+		} else if (num.length === 6) { // 数中加入逗号
+			// num = num.slice(0, 2) + ',' + num.slice(2, 5) + ',' + num.slice(5, 8)
+			chartNum = num.split('') // 将其便变成数据
+		} else {
+			alert('显示异常');
+		}
+	}
+
+	function setNumberTransform() {
+		var numberItems = $('.item');
+		const numberArr = chartNum.filter(item => !isNaN(item));
+		for (var index = 0; index < numberItems.length; index++) {
+			const elem = numberItems[index];
+			elem.style.transform = 'translate(-50%, -' + numberArr[index] * 10 + '%)'
+		}
+	}
+
+
+	var chartNum2 = ['0', '0', '0', '0', '0', '0'];
+	start2();
+
+	function start2() {
+		var strHtml = "";
+		for (var i = 0; i < chartNum2.length; i++) {
+			strHtml += '<li class="number-item">\n' +
+				'                <span><i class="item2" ref="numberItem">0123456789</i></span>\n' +
+				'            </li>';
+		}
+		$("#TNum2").html(strHtml);
+
+		// 定时改变数字
+		setInterval(function setInt() {
+			toOrderNum2(usertuixiao);
+			setNumberTransform2();
+		}, 1000)
+	}
+
+	function toOrderNum2(num) {
+		num = num.toString() // 数字变成字符串
+		if (num.length < 6) { // 如未满位数，添加"0"补位
+			num = '0' + num
+			toOrderNum2(num) // 递归添加"0"补位
+		} else if (num.length === 6) { // 数中加入逗号
+			// num = num.slice(0, 2) + ',' + num.slice(2, 5) + ',' + num.slice(5, 8)
+			chartNum2 = num.split('') // 将其便变成数据
+		} else {
+			alert('显示异常');
+		}
+	}
+
+	function setNumberTransform2() {
+		var numberItems = $('.item2');
+		const numberArr = chartNum2.filter(item => !isNaN(item));
+		for (var index = 0; index < numberItems.length; index++) {
+			const elem = numberItems[index];
+			elem.style.transform = 'translate(-50%, -' + numberArr[index] * 10 + '%)'
+		}
+	}
+
+
+	var chartNum3 = ['0', '0', '0', '0', '0', '0'];
+	start3();
+
+	function start3() {
+		var strHtml = "";
+		for (var i = 0; i < chartNum3.length; i++) {
+			strHtml += '<li class="number-item">\n' +
+				'                <span><i class="item3" ref="numberItem">0123456789</i></span>\n' +
+				'            </li>';
+		}
+		$("#TNum3").html(strHtml);
+
+		// 定时改变数字
+		setInterval(function setInt() {
+			toOrderNum3(orderoverberorenum);
+			setNumberTransform3();
+		}, 1000)
+	}
+
+	function toOrderNum3(num) {
+		num = num.toString() // 数字变成字符串
+		if (num.length < 6) { // 如未满位数，添加"0"补位
+			num = '0' + num
+			toOrderNum2(num) // 递归添加"0"补位
+		} else if (num.length === 6) { // 数中加入逗号
+			// num = num.slice(0, 2) + ',' + num.slice(2, 5) + ',' + num.slice(5, 8)
+			chartNum2 = num.split('') // 将其便变成数据
+		} else {
+			alert('显示异常');
+		}
+	}
+
+	function setNumberTransform3() {
+		var numberItems = $('.item3');
+		const numberArr = chartNum2.filter(item => !isNaN(item));
+		for (var index = 0; index < numberItems.length; index++) {
+			const elem = numberItems[index];
+			elem.style.transform = 'translate(-50%, -' + numberArr[index] * 10 + '%)'
+		}
+	}
+
+
+
+
+	var chartNum4 = ['0', '0', '0', '0', '0', '0'];
+	start4();
+
+	function start4() {
+		var strHtml = "";
+		for (var i = 0; i < chartNum4.length; i++) {
+			strHtml += '<li class="number-item">\n' +
+				'                <span><i class="item4" ref="numberItem">0123456789</i></span>\n' +
+				'            </li>';
+		}
+		$("#TNum4").html(strHtml);
+
+		// 定时改变数字
+		setInterval(function setInt() {
+			toOrderNum4(replenishment);
+			setNumberTransform4();
+		}, 1000)
+	}
+
+	function toOrderNum4(num) {
+		num = num.toString() // 数字变成字符串
+		if (num.length < 6) { // 如未满位数，添加"0"补位
+			num = '0' + num
+			toOrderNum4(num) // 递归添加"0"补位
+		} else if (num.length === 6) { // 数中加入逗号
+			// num = num.slice(0, 2) + ',' + num.slice(2, 5) + ',' + num.slice(5, 8)
+			chartNum4 = num.split('') // 将其便变成数据
+		} else {
+			alert('显示异常');
+		}
+	}
+
+	function setNumberTransform4() {
+		var numberItems = $('.item4');
+		const numberArr = chartNum4.filter(item => !isNaN(item));
+		for (var index = 0; index < numberItems.length; index++) {
+			const elem = numberItems[index];
+			elem.style.transform = 'translate(-50%, -' + numberArr[index] * 10 + '%)'
+		}
+	}
+
+
+	function changeDateFormat(cellval) {
+
+		var d = new Date(cellval);
+
+		var year = d.getFullYear(); //年
+		var month = d.getMonth() + 1; //月
+		var day = d.getDate(); //日
+
+		var hh = d.getHours(); //时
+		var mm = d.getMinutes(); //分
+		var ss = d.getSeconds(); //秒
+
+		var clock = year + "-";
+
+		if (month < 10)
+			clock += "0";
+
+		clock += month + "-";
+
+		if (day < 10)
+			clock += "0";
+
+		clock += day + " ";
+
+		if (hh < 10)
+			clock += "0";
+
+		clock += hh + ":";
+		if (mm < 10) clock += '0';
+		clock += mm + ":";
+
+		if (ss < 10) clock += '0';
+		clock += ss;
+		return (clock);
+
+	}
+
+
+
+	option = {
+		title: {
+			text: '本月产品订单及金额统计',
+			subtext: '总金额'
+		},
+		tooltip: {
+			trigger: 'axis'
+		},
+		legend: {
+
+		},
+		toolbox: {
+			show: true,
+			feature: {
+				dataZoom: {
+					yAxisIndex: 'none'
+				},
+				dataView: {
+					readOnly: false
+				},
+				magicType: {
+					type: ['line', 'bar']
+				},
+				restore: {},
+				saveAsImage: {}
+			}
+		},
+		xAxis: {
+			type: 'category',
+			boundaryGap: false,
+			data: date
+		},
+		yAxis: {
+			type: 'value',
+			axisLabel: {
+				formatter: '{value}'
+			}
+		},
+		series: [{
+				name: '当日金额',
+				type: 'line',
+				data: daymoney,
+				markPoint: {
+					data: [{
+							type: 'max',
+							name: '最大值'
+						},
+						{
+							type: 'min',
+							name: '最小值'
+						}
+					]
+				},
+				markLine: {
+					data: [{
+						type: 'average',
+						name: '平均值'
+					}]
+				}
+			},
+			{
+				name: '当日订单数量',
+				type: 'line',
+				data: dayorder
+					/*,
+					             markPoint: {
+					             data: [
+					             {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
+					             ]
+					             }*/
+					,
+				markLine: {
+					data: [{
+							type: 'average',
+							name: '平均值'
+						},
+						[{
+							symbol: 'none',
+							x: '90%',
+							yAxis: 'max'
+						}, {
+							symbol: 'circle',
+							label: {
+								position: 'start',
+								formatter: '最大值'
+							},
+							type: 'max',
+							name: '最高点'
+						}]
+					]
+				}
+			}
+		]
+	};
+	var myChart = echarts.init(document.getElementById('main'));
+	myChart.setOption(option);
+
+	var option = {
+		url: "http://192.168.31.75:8808/zklystorenew/ManagerUserController/seluserloginlog", // 获取表格数据的url
+		cache: false, // 设置为 false 禁用 AJAX 数据缓存， 默认为true
+		striped: true, //表格显示条纹，默认为false
+		pagination: true, // 在表格底部显示分页组件，默认false
+		pageList: [5, 10, 15, 20], // 设置页面可以显示的数据条数
+		pageSize: 5, // 页面数据条数
+		pageNumber: 1, // 首页页码
+		sidePagination: 'client', // 设置为服务器端分页server//client
+		columns: [{
+				field: 'ulId', // 返回json数据中的name
+				title: '序号', // 表格表头显示文字
+				formatter: function(value, row, index) {
+					return index + 1;
+				}
+			},
+			{
+				field: 'uName',
+				title: '用户名'
+
+			}, {
+				field: 'ulIp',
+				title: '登录ip'
+			}, {
+				field: 'uPhone',
+				title: '手机号'
+			}, {
+				field: 'ulTime',
+				title: '登录时间',
+				formatter: function(value, row, index) {
+					return changeDateFormat(value)
+				}
+			}
+
+		]
+	}
+	$("#table").bootstrapTable(option);
+</script>
+<script>
+	option2 = {
+		title: {
+			text: "",
+			subtext: "",
+			x: "center"
+		},
+		tooltip: {
+			trigger: "item",
+			formatter: "{a} <br/>{b} : {c}"
+		},
+		legend: {
+			x: "center",
+			y: "bottom",
+			data: ["rose1", "rose2", "rose3", "rose4", "rose5", "rose6", "rose7", "rose8"]
+		},
+		toolbox: {
+			show: true,
+			feature: {
+				mark: {
+					show: true
+				},
+				dataView: {
+					show: true,
+					readOnly: true
+				},
+				restore: {
+					show: true
+				},
+				saveAsImage: {
+					show: true
+				}
+			}
+		},
+		calculable: true,
+		series: [{
+			name: "总销售量",
+			type: "pie",
+			radius: [30, 90],
+			center: ["50%", "50%"],
+			roseType: "area",
+			data: [{
+					value: 10,
+					name: "rose1"
+				},
+				{
+					value: 5,
+					name: "rose2"
+				},
+				{
+					value: 15,
+					name: "rose3"
+				},
+				{
+					value: 25,
+					name: "rose4"
+				},
+				{
+					value: 20,
+					name: "rose5"
+				},
+				{
+					value: 35,
+					name: "rose6"
+				},
+				{
+					value: 30,
+					name: "rose7"
+				},
+				{
+					value: 40,
+					name: "rose8"
+				}
+			]
+		}]
+
+	};
+	var myChart2 = echarts.init(document.getElementById('main2'));
+	myChart2.setOption(option2);
+</script>

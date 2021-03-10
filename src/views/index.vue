@@ -1,7 +1,9 @@
 <template>
   <el-container class="index-con">
     <el-aside :class="showclass">
-      <leftnav></leftnav>
+		<el-scrollbar style="height: 100vh;width: 100%;">
+			<leftnav ref="leftnav"></leftnav>
+		</el-scrollbar>
     </el-aside>
     <el-container class="main-con">
       <el-header class="index-header">
@@ -19,6 +21,7 @@ import navcon from '../components/navcon.vue';
 import leftnav from '../components/leftnav.vue';
 import "../../static/js/sockjs.min.js";
 import "../../static/js/stomp.js";
+let _this;
 export default {
   name: 'index',
   data() {
@@ -58,6 +61,7 @@ export default {
 					Notification.requestPermission(function(status) {
 						if (status === "granted") {
 							new Notification(messages);
+							_this.$refs["leftnav"].getList("layout");
 						} else {
 							alert(messages);
 						}
@@ -67,13 +71,15 @@ export default {
 		};
 		// 断开连接
 		var on_error = function() {
-			this.sendRabbitmq();
+			_this.sendRabbitmq();
+			_this.$refs["leftnav"].getList("layout");
 			console.error("断开重新连接,error");
 		};
 		client.connect("read", "read", on_connect, on_error, "/");
 	},
    },
-  created() {
+  mounted() {
+	  _this = this ;
     // 监听
     this.$root.Bus.$on('toggle', value => {
       if (value) {

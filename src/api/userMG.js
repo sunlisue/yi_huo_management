@@ -130,5 +130,10 @@ export const getQR = (params) => { return req("post", "/api/CreateQRAPI/getQR", 
 export const selOrderfromByShipments = (params) => { return req("post", "/api/orderapi/selOrderfromByShipments", params) };
 // 录入发货信息
 export const instLogisticOrder = (params) => { return req("post", "/api/ApiKdwlController/instLogisticOrder", params) };
-
+// 修改密码
+export const updatepwd = (params) => { return req("post", "/api/ManagerUserController/updatepwd", params) };
+// 修改店铺
+export const updatestore = (params) => { return req("post", "/api/ManagerUserController/updatestore", params) };
+// 气泡显示
+export const getOrderType = (params) => { return req("post", "/api/orderapi/getOrderType", params) };
 

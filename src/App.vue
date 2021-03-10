@@ -106,5 +106,11 @@ body {
 			margin-bottom: 10px;
 		}
 	}
+	// 左采单 滑动
+	.el-scrollbar__wrap {
+		overflow: visible;
+		overflow-y: scroll;
+	    height: 100%;
+	}
 }
 </style>
