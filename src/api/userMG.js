@@ -126,6 +126,8 @@ export const getSetting = (params) => { return req("post", "/api/SettingControll
 export const selAdvertiseProductDetailsAll = (params) => { return req("post", "/api/commodity/selAdvertiseProductDetailsAll", params) };
 // 生成二维码
 export const getQR = (params) => { return req("post", "/api/CreateQRAPI/getQR", params) };
+// 发货管理
+export const selOrderfromByShipments = (params) => { return req("post", "/api/orderapi/selOrderfromByShipments", params) };
 
 
 

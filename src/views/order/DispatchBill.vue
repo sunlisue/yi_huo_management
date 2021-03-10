@@ -44,18 +44,22 @@
 		</div>
 		<!-- 录入发货信息 -->
 		<el-dialog :close-on-click-modal="false" center title="录入发货物流信息" :visible.sync="pwdVisible" width="30%">
-			<!-- <el-form :model="pwdForm" status-icon :rules="pwdRules" ref="pwdForm" label-width="70px" size="mini">
+			<el-form :model="pwdForm" status-icon :rules="rules" ref="pwdForm" label-width="100px" size="mini">
 				<el-form-item label="物流订单号" prop="pass">
 					<el-input type="password" v-model="pwdForm.pass" autocomplete="off"></el-input>
 				</el-form-item>
-				<el-form-item label="物流公司" prop="checkPass">
-					<el-input type="password" v-model="pwdForm.checkPass" autocomplete="off"></el-input>
+				<el-form-item label="物流公司" prop="pass">
+					<el-select v-model="form.pType" placeholder="请选择物流公司"
+						class="el-input-normal-margin-right el-input-normal-select-width">
+						<el-option v-for="(item, index) in logisticsList" :key="index" :value="item.lId" :label="item.lName">
+						</el-option>
+					</el-select>
 				</el-form-item>
 				<el-form-item>
 					<el-button icon="el-icon-close" size="mini" type="primary" @click="submitForm('pwdForm')">提交</el-button>
 					<el-button icon="el-icon-check" size="mini" @click="resetForm('pwdForm')">重置</el-button>
 				</el-form-item>
-			</el-form> -->
+			</el-form>
 		</el-dialog>
 		<!-- 底部 -->
 		<div class="useridcard-footer" v-if="form.current">
@@ -65,7 +69,7 @@
 </template>
 
 <script>
-	import { selOrderfromByShipments } from "@/api/userMG.js";
+	import { selOrderfromByShipments, sleLogisticAll } from "@/api/userMG.js";
 	import Pagination from "@/components/Pagination.vue"
 	export default {
 		name: "product",
@@ -89,17 +93,18 @@
 					lId:"",
 				},
 				rules: {
-					oId: [{
+					loId: [{
 						required: true,
-						message: "不能为空",
+						message: "物流单号不能为空",
 						trigger: ["blur", "change"],
 					},],
 					lId: [{
 						required: true,
-						message: "电话不能为空",
+						message: "请选择物流公司",
 						trigger: ["blur", "change"],
 					},],
 				},
+				logisticsList: [], //物流公司
 			}
 		},
 		created() {
@@ -144,6 +149,10 @@
 				selOrderfromByShipments(this.form).then(res => {
 					this.tableData = res.orders;
 					this.loading = false;
+				});
+				sleLogisticAll().then(res => {
+					this.logisticsList = res.logistics;
+					console.log(this.logisticsList);
 				})
 			},
 			// 重置
