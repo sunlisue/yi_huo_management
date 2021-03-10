@@ -57,7 +57,7 @@ export default {
 				function(d) {
 					var message = d.body;
 					var messages = message.split(";");
-					console.log(messages);
+					console.log('正在测试',messages);
 					Notification.requestPermission(function(status) {
 						if (status === "granted") {
 							new Notification(messages);
@@ -79,7 +79,8 @@ export default {
 	},
    },
   mounted() {
-	  _this = this ;
+
+	_this = this;
     // 监听
     this.$root.Bus.$on('toggle', value => {
       if (value) {
@@ -90,7 +91,7 @@ export default {
         }, 300)
       }
     });
-		this.sendRabbitmq();
+	this.sendRabbitmq();
   },
   beforeUpdate() {},
   // 挂载前状态(里面是操作)
