@@ -58,7 +58,20 @@ body {
 	.el-body-normal-margin-top{
 		margin-top: 10px;
 	}
-	
+	.myproduct{
+		.el-cascader{
+			height: 35px!important;
+			line-height: 35px !important;
+			width: 180px;
+			.el-input__inner{
+				height: 35px!important;
+			}			
+			.el-input--suffix{
+				height: 35px!important;
+			}
+		}
+
+	}
 	
 	// 上传图片
 	.avatar-uploader .el-upload {
@@ -111,6 +124,17 @@ body {
 		overflow: visible;
 		overflow-y: scroll;
 	    height: 100%;
+	}
+	// 订单总览
+	.orderFromAll{
+		.cell{
+			.image{
+				img{
+					width: 100px;
+					height: 100px;
+				}
+			}
+		}
 	}
 }
 </style>
