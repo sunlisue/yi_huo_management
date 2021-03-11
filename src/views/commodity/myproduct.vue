@@ -14,9 +14,7 @@
 				 start-placeholder="开始日期" end-placeholder="结束日期">
 				</el-date-picker>
 			</label>
-			<el-select v-model="form.pType" placeholder="请选择分类" class="el-input-normal-margin-right el-input-normal-select-width">
-				<el-option v-for="(item,index) in selcategoryArray" :key="index" :value="item.cId" :label="item.cType"></el-option>
-			</el-select>
+			<el-cascader class="el-input-normal-margin-right" placeholder="选择分类" :options="productDetailsArray" v-model="form.pType" :props="{multiple: true}" collapse-tags clearable  />
 			<el-button type="primary" size="small" @click="getList('query')">快速查询</el-button>
 			<el-button type="primary" size="small" @click="reset">重置</el-button>
 			<el-button type="primary" size="small" @click="$router.push({path:'/commodity/product_ch.jsp',query:{show:false}})">添加</el-button>
@@ -145,7 +143,7 @@
 					isme
 				},
 				upDownAll: [],
-				selcategoryArray: [],
+				productDetailsArray: [],
 			}
 		},
 		watch: {
@@ -156,9 +154,8 @@
 		},
 		created() {
 			this.getList();
-			selcategory().then(res => {
-				this.selcategoryArray = res.datalist;
-			});
+			// 产品类型
+			 selcategory().then(res=>{this.classCh(res.datalist)});
 		},
 		methods: {
 			upDownAllAjax(pPutawaytype) {
@@ -175,6 +172,16 @@
 					this.$refs.multipleTable.clearSelection();
 					this.upDownAll = [];
 					this.getList();
+				})
+			},
+			classCh(e){
+				e.map(res=>{
+					let obj = {};
+					obj.value = res.cId;
+					obj.label = res.cType;
+					obj.children = [] ;
+					res.categories.map(item=>{obj.children.push({value:item.cId,label:item.cType})});
+					this.productDetailsArray.push(obj)
 				})
 			},
 			selectTble(options, row) {

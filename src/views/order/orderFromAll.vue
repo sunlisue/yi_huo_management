@@ -1,12 +1,12 @@
 <template>
-	<div class="product" v-loading="loading">
+	<div class="orderFromAll" v-loading="loading">
 		<!-- 面包屑导航 -->
 		<el-breadcrumb separator-class="el-icon-arrow-right">
 			<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
 			<el-breadcrumb-item>{{$route.name}}</el-breadcrumb-item>
 		</el-breadcrumb>
 		<!-- 头部 -->
-		<div class="product-header el-header-normal-margin-top">
+		<div class="orderFromAll-header el-header-normal-margin-top">
 			<el-input size="mini" v-model="form.oNumber" class="el-input-normal-width el-input-normal-margin-right" placeholder="订单号"></el-input>
 			<el-input size="mini" v-model="form.defaddress" class="el-input-normal-width el-input-normal-margin-right" placeholder="地址"></el-input>
 			<el-input size="mini" v-model="form.oPeople" class="el-input-normal-width el-input-normal-margin-right" placeholder="收件人"></el-input>
@@ -39,7 +39,7 @@
 			</div>
 		</div>
 		<!-- 身体 -->
-		<div class="product-body el-body-normal-margin-top">
+		<div class="orderFromAll-body el-body-normal-margin-top">
 			<el-table :max-height="600" :data="tableData" size="mini" stripe style="width: 100%" border tooltip-effect="dark" :header-cell-style="{ background: '#eef1f6', color: '#606266' }" ref="multipleTable">
 				<el-table-column type="selection" width="50"></el-table-column>
 				<el-table-column type="index" label="序号" width="50"></el-table-column>
@@ -47,6 +47,11 @@
 				<el-table-column prop="defaddress" label="详细地址" width="150"></el-table-column>
 				<el-table-column label="收件人" prop="oPeople" width="100"></el-table-column>
 				<el-table-column prop="uName" label="下单账号" width="150"></el-table-column>
+				<el-table-column width="125" label="产品图">
+					<template slot-scope="scope">
+						<el-image style="cursor: pointer; width: 100px; height: 100px" v-for="item in scope.row.pimage" :src="item.url" @click="$router.push({query:{pid:item.pid,show:true},path:'/commodity/product_ch.jsp'})" fit="cover"></el-image>
+					</template>
+				</el-table-column>
 				<el-table-column prop="pName" label="下单产品" width="300"></el-table-column>
 				<el-table-column prop="pColorname" label="颜色" width="150"></el-table-column>
 				<el-table-column prop="pNum" label="产品数量" width="100"></el-table-column>
@@ -62,9 +67,9 @@
 						{{scope.row.oDistribution | filterOrder}}
 					</template>
 				</el-table-column>
-				<el-table-column prop="muName" label="所属商家" width="150"></el-table-column>
-				<el-table-column prop="distributionUid" label="分销ID" width="150"></el-table-column>
-				<el-table-column prop="userDistributioName" label="分销账号" width="150"></el-table-column>
+				<el-table-column prop="muName" label="所属商家" width="150" fixed="right"></el-table-column>
+				<el-table-column prop="distributionUid" label="分销ID" width="150" fixed="right"></el-table-column>
+				<el-table-column prop="userDistributioName" label="分销账号" width="150" fixed="right"></el-table-column>
 			</el-table>
 		</div>
 		<!-- 底部 -->
@@ -76,7 +81,7 @@
 
 <script>
 	import { selOrderAllPlatform } from "@/api/payMG.js";
-	import Pagination from "@/components/Pagination.vue"
+	import Pagination from "@/components/Pagination.vue";
 	export default {
 		name: "orderFromAll",
 		components:{Pagination},
@@ -140,10 +145,10 @@
 	}
 </script>
 <style lang="scss" scoped>
-	.product {
-		.product-body {}
-
-		.product-header {
+	.orderFromAll {
+		.orderFromAll-body {
+		}
+		.orderFromAll-header {
 			display: flex;
 			flex-wrap: wrap;
 		}

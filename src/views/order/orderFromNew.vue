@@ -63,9 +63,9 @@
 						{{scope.row.oDistribution | oType}}
 					</template>
 				</el-table-column>
-				<el-table-column prop="muName" label="所属商家" width="150"></el-table-column>
-				<el-table-column prop="distributionUid" label="分销ID" width="150"></el-table-column>
-				<el-table-column prop="userDistributioName" label="分销账号" width="150"></el-table-column>
+				<el-table-column prop="muName" label="所属商家" width="150" fixed="right"></el-table-column>
+				<el-table-column prop="distributionUid" label="分销ID" width="150" fixed="right"></el-table-column>
+				<el-table-column prop="userDistributioName" label="分销账号" width="150" fixed="right"></el-table-column>
 			</el-table>
 		</div>
 		<!-- 底部 -->

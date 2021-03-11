@@ -13,7 +13,7 @@
 		<div class="productCh-body el-header-normal-margin-top">
 			<el-form label-position="right" label-width="150px" :model="form">
 				<el-form-item label="简介:">
-					<el-input type="textarea" :rows="3" :disabled="disabled" placeholder="未输入" v-model="form.pIntroduce"></el-input>
+					<el-input type="textarea" :rows="6" :disabled="disabled" placeholder="未输入" v-model="form.pIntroduce"></el-input>
 				</el-form-item>
 				<el-form-item label="产品名:">
 					<el-input v-model="form.pName" :disabled="disabled"  ></el-input>
