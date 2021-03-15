@@ -68,6 +68,14 @@
 				<el-table-column prop="cType" label="产品类型"></el-table-column>
 				<el-table-column prop="pDiscount" label="折扣"></el-table-column>
 				<el-table-column prop="sTitle" label="会员级别"></el-table-column>
+				<el-table-column prop="sTitle" label="自营" width="130">
+					<template slot-scope="scope">
+						  <el-select v-model="scope.row.isAutotrophy" @change="isAutotrophyE(scope.row)" placeholder="请选择">
+						    <el-option label="自营" :value="1" />
+							<el-option label="非自营" :value="0" />
+						  </el-select>
+					</template>
+				</el-table-column>
 				<el-table-column prop="uStaus" label="运费">
 					<template slot-scope="scope">
 						<span>{{scope.row.pFreight==0?"免费":scope.row.pFreight}}</span>
@@ -122,7 +130,8 @@
 		isrecommend,
 		delproduce,
 		batchIsPutAway,
-		updProductDetails
+		updProductDetails,
+		upproductsautotrophy
 	} from "@/api/userMG.js";
 	import {
 		getAllBrand
@@ -191,6 +200,13 @@
 			},
 			selectAll(options) {
 				this.upDownAll = options;
+			},
+			// 设置自营
+			isAutotrophyE(e){
+				console.log(e);
+				upproductsautotrophy({isAutotrophy:e.isAutotrophy,pId:e.pid}).then(res=>{
+					this.$message.success("设置成功");
+				})
 			},
 			// 表格里的点击事件
 			tableBtn(data, status) {

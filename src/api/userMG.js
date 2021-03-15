@@ -136,4 +136,7 @@ export const updatepwd = (params) => { return req("post", "/api/ManagerUserContr
 export const updatestore = (params) => { return req("post", "/api/ManagerUserController/updatestore", params) };
 // 气泡显示
 export const getOrderType = (params) => { return req("post", "/api/orderapi/getOrderType", params) };
+// 设置自营
+export const upproductsautotrophy = (params) => { return req("post", "/api/commodity/upproductsautotrophy", params) };
+
 
